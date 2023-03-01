@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import * as models from './models/manifest.js';
+const THREE = require('three');
+const models = require('./models/manifest.js');
 
 
 //Create test scene
