@@ -1,0 +1,1 @@
+const immovableCube = require('public/js/models/immovableCube.js');

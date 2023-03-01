@@ -1,0 +1,28 @@
+{
+  "name": "multi-3d-web-renderer",
+  "version": "0.0.1",
+  "description": "Initial version of a multi-client three.js web renderer.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon run index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Erasmusss/Threejs-Multiplayer-Render.git"
+  },
+  "keywords": [
+    "private"
+  ],
+  "author": "Erasmusss",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Erasmusss/Threejs-Multiplayer-Render/issues"
+  },
+  "homepage": "https://github.com/Erasmusss/Threejs-Multiplayer-Render#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20",
+    "serve-favicon": "^2.5.0",
+    "three": "^0.150.1"
+  }
+}
