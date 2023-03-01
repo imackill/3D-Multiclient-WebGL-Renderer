@@ -1,6 +1,6 @@
 # 3D Web Renderer
 <a>Multi-Client 3D Web Renderer meant to have several clients in a single session.</a>
-<h2>Dependencies</h2>
+## Dependencies
 <ul>
     <li>node</li>
     <li>express</li>
@@ -9,4 +9,4 @@
     <li>nodemon (dev purposes and is optional)</li>
 </ul>
 
-<font size=1>*all dependencies are already in node_modules</font>
+###### *all dependencies are already in [node_modules](https://github.com/Erasmusss/3D-Multiclient-WebGL-Renderer/tree/master/node_modules) folder
