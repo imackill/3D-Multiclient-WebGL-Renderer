@@ -7,11 +7,10 @@ const server = express();
 
 server.use(favicon(`${__dirname}/public/assets/favicon.ico`));
 
-server.use(express.static(`${__dirname}/public`));
-server.use(express.static(`${__dirname}/node_modules`));
+server.use(express.static(`${__dirname}`));
 
 server.get("/", (req,res) =>{
-    res.sendFile(`html/main.html`, {root: __dirname});
+    res.sendFile(`/`, {root: __dirname});
 });
 
 server.listen(PORT, () => {

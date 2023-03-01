@@ -1,1 +1,5 @@
-const immovableCube = require('public/js/models/immovableCube.js');
+import { immovableCube } from './immovableCube.js';
+
+export {
+    immovableCube,
+};
