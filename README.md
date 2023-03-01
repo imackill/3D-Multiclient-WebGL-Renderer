@@ -9,4 +9,4 @@
     <li>nodemon (dev purposes and is optional)</li>
 </ul>
 
-<font size=-2><a>*all dependencies are already in node_modules</a></font>
+<font size=1>*all dependencies are already in node_modules</font>
