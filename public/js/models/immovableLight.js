@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 export class immovableLight{
     constructor(
         objName="Light",
@@ -20,6 +21,7 @@ export class immovableLight{
         this.intensity = intensity;
         this.type = type;
         this.options = options;
+        this.scene = scene;
         this.initElement = () => {
             let light;
             switch (this.type) {
