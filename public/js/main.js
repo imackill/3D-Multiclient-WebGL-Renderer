@@ -14,24 +14,18 @@ renderer.setClearColor( 0xffffff, 0);
 renderer.setSize(window.innerWidth, window.innerHeight);
 $("body").append(renderer.domElement);
 
-//TEST LIGHTING ADD IN LIGHT OBJECT IN MODELS LATER!!!!
-const light = new THREE.AmbientLight(0xffaaff);
-light.position.set(10, 10, 10);
-scene.add(light);
-
-//test object (objName,pos,edgeLength,geometry,material,meshType,materialOptions,scene)
-let testCube = new models.immovableCube(
-    "Test Cube",
+const shinyCube = new models.immovableCube(
+    "Shiny",
     {x:0,y:0,z:0},
     1,
     THREE.BoxGeometry,
-    THREE.MeshBasicMaterial,
+    THREE.MeshStandardMaterial,
     THREE.Mesh,
     {color:0x00ff00},
-    scene,
-);
+    scene
+    );
 
-testCube.initElement();
+
 
 //final animation and rendering
 function animate() {
