@@ -34,6 +34,10 @@ export class KeyboardPerspectiveCamera extends THREE.PerspectiveCamera{
         this.position.x = pos.x;
         this.position.y = pos.y;
         this.position.z = pos.z;
+
+        document.addEventListener("mousemove", (event) => {
+            console.log(`(${event.clientX},${event.clientY})`);
+        });
         this.rotation.x = rot.x;
         this.rotation.y = rot.y;
         this.rotation.z = rot.z;
