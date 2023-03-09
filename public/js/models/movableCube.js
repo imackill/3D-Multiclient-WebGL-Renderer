@@ -9,7 +9,9 @@ export class movableCube extends immovableCube{
         meshType,
         materialOptions,
         scene,
-        rotation
+        rotation,
+        onupdate=()=>{},
+        oninit=()=>{}
     ){
         super(objName,pos,edgeLength,geometry,material,meshType,materialOptions,scene,rotation);
         this.dx = 0;
@@ -18,7 +20,11 @@ export class movableCube extends immovableCube{
         this.drx = 0;
         this.dry = 0;
         this.drz = 0;
-        this.update = () => {
+        this.lifespan = 0;
+        this.onUpdate = onupdate;
+        this.oninit = oninit;
+        this.update = (count) => {
+            this.onupdate();
             this.pos.x+=this.dx;
             this.pos.y+=this.dy;
             this.pos.z+=this.dz;
@@ -36,5 +42,10 @@ export class movableCube extends immovableCube{
                 this.rotation.z,
             );
         }
+        this.initElement = () => {
+            this.initElement();
+            this.oninit();
+        }
+        setInterval(()=>this.lifespan+=1,1000);
     }
 }
