@@ -9,6 +9,7 @@ export class immovableCube{
     scene,
     rotation
     ){
+        this.lifespan = 0;
         this.name = objName;
         this.pos = pos;
         this.edgeLength = edgeLength;
@@ -19,6 +20,7 @@ export class immovableCube{
         this.scene = scene;
         this.sceneObject;
         this.rotation = rotation;
+        let cubeEvent = new CustomEvent("oncubeinit", {"detail":"when a new cube object is initialized"})
         this.initElement = () => {
             let geo = new this.geometry(this.edgeLength,this.edgeLength,this.edgeLength);
             let mat = new this.material(this.materialOptions);
@@ -31,6 +33,8 @@ export class immovableCube{
             cube.rotation.z = this.rotation.z;
             this.sceneObject = cube;
             this.scene.add(cube);
+            document.dispatchEvent(cubeEvent);
+            setInterval(()=>this.lifespan+=1,1000);
         };
     };
 }

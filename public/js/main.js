@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import * as models from './models/manifest.js';
 
-const frameUpdate = 0;
+let frameUpdate = 0;
 
 //Create test scene
 const scene = new THREE.Scene();
@@ -32,7 +32,7 @@ let cubeTest = new models.immovableCube(
     THREE.BoxGeometry,
     THREE.MeshBasicMaterial,
     THREE.Mesh,
-    {color:0x00ff00},
+    {color:0xff0000, wireframe:false},
     scene,
     {x:0,y:0,z:0},
     );
@@ -45,13 +45,14 @@ let movingcubeTest = new models.movableCube(
     THREE.BoxGeometry,
     THREE.MeshBasicMaterial,
     THREE.Mesh,
-    {color:0xff00f0},
+    {color:0xff00f0,wireframe:true},
     scene,
     {x:0,y:0,z:0},
-    ()=>{},
     ()=>{
-        this.dx+=1;
-        setTimeout(this.dx-=1,500);
+        //onupdate
+    },
+    ()=>{
+        //oninit
     }
 );
 

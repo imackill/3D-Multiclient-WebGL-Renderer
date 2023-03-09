@@ -10,8 +10,8 @@ export class movableCube extends immovableCube{
         materialOptions,
         scene,
         rotation,
-        onupdate=()=>{},
-        oninit=()=>{}
+        onupdate=(options={})=>{},
+        oninit=(options={})=>{}
     ){
         super(objName,pos,edgeLength,geometry,material,meshType,materialOptions,scene,rotation);
         this.dx = 0;
@@ -23,8 +23,9 @@ export class movableCube extends immovableCube{
         this.lifespan = 0;
         this.onUpdate = onupdate;
         this.oninit = oninit;
+        document.addEventListener("oncubeinit", ()=>{oninit()});
         this.update = (count) => {
-            this.onupdate();
+            this.onUpdate();
             this.pos.x+=this.dx;
             this.pos.y+=this.dy;
             this.pos.z+=this.dz;
@@ -42,10 +43,5 @@ export class movableCube extends immovableCube{
                 this.rotation.z,
             );
         }
-        this.initElement = () => {
-            this.initElement();
-            this.oninit();
-        }
-        setInterval(()=>this.lifespan+=1,1000);
     }
 }
