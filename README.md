@@ -8,5 +8,3 @@
     <li>serve-favicon</li>
     <li>body-parser</li>
 </ul>
-
-###### *all dependencies are already in [node_modules](https://github.com/Erasmusss/3D-Multiclient-WebGL-Renderer/tree/master/node_modules) folder

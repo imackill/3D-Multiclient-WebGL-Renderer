@@ -3,6 +3,11 @@ import * as models from './models/manifest.js';
 
 let frameUpdate = 0;
 
+fetch("/users_pos")
+    .then(res => res.json())
+    .then(data=>console.log(data))
+    .catch(err => console.error(err));
+
 //Create test scene
 const scene = new THREE.Scene();
 
@@ -59,7 +64,6 @@ let movingcubeTest = new models.movableCube(
 movingcubeTest.initElement();
 
 movingcubeTest.drx+=0.01;
-movingcubeTest.dry+=0.01;
 
 RenderJobs.arr.push(movingcubeTest);
 

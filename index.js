@@ -16,9 +16,8 @@ server.get("/", (req,res) =>{
 });
 
 server.get("/users_pos", (req,res) => {
-    res.json(fs.readFile(`${__dirname}/data/userpos.json`, (err) => {
-        return `Error, could not access file ${__dirname}/data/userpos.json.\n${err}`;
-    }));
+    let data = ''//nothing yet
+    res.send(JSON.stringify(data));
 });
 
 server.listen(PORT, () => {
