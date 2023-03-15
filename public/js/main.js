@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import * as models from './models/manifest.js';
-import * as scripts from './scripts/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 
 let frameUpdate = 0;
