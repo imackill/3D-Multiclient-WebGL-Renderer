@@ -22,8 +22,6 @@ renderer.domElement.addEventListener("click", () => {
 
 $("body").append(renderer.domElement);
 
-let playerData = await scripts.getUserData();
-
 let RenderJobs = {arr:[]};
 
 //cube test
