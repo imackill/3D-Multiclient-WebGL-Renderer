@@ -1,11 +1,14 @@
 const express = require('express');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const http = require('http');
+const { Server } = require('socket.io');
 
 const PORT = 3000;
 
 const server = express();
+const httpServer = http.createServer(server);
+const io = new Server(httpServer);
 
 server.use(favicon(`${__dirname}/public/assets/favicon.ico`));
 
@@ -15,9 +18,12 @@ server.get("/", (req,res) =>{
     res.sendFile('/index.html', {root: __dirname});
 });
 
-server.get("/pos_data", (req,res) => {
-    res.sendFile("/data/userpos.json", {root:`${__dirname}`});
-    console.log(`User ${req.ip} connected.`);
+io.on('connection', (socket) => {
+    console.log(`User ${socket.handshake.address} connected.`);
+
+    io.on('disconnect', (scoket) => {
+        console.log(`User ${socket.handshake.address} disconnected.`)
+    });
 });
 
 server.listen(PORT, () => {
