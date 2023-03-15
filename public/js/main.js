@@ -27,28 +27,32 @@ socket.emit('camerainit', threeCamera.position);
 
 let RenderJobs = {arr:[]};
 
-//cube test
-let movingcubeTest = new models.movableCube(
-    "moving",
-    {x:0,y:0,z:-5},
-    1,
-    THREE.BoxGeometry,
+//custom polyhedron
+let polyhedron_01 = new models.immovablePolyhedron(
+    "I hate threejs polyhedrons",
+    {x:0,y:0,z:-7},
+    [
+        new THREE.Vector3(1,1,1),
+        new THREE.Vector3(-1,-1,1),
+        new THREE.Vector3(-1,1,-1),
+        new THREE.Vector3(1,-1,-1),
+    ],
+    [
+        new THREE.Vector3(2,1,0),
+        new THREE.Vector3(0,3,2),
+        new THREE.Vector3(1,3,0),
+        new THREE.Vector3(2,3,1),
+    ],
+    3,
+    50,
     THREE.MeshBasicMaterial,
-    THREE.Mesh,
-    {color:0xff00f0,wireframe:true},
-    scene,
-    {x:0,y:0,z:0},
-    ()=>{
-        //onupdate
-    },
-    ()=>{
-        movingcubeTest.drx+=0.01;
-    }
+    {color:0x000000, wireframe:true},
+    scene
 );
 
-movingcubeTest.initElement();
+RenderJobs.arr.push(polyhedron_01);
 
-RenderJobs.arr.push(movingcubeTest);
+polyhedron_01.initElement();
 
 //final animation and rendering
 function animate() {
