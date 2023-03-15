@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 import * as models from './models/manifest.js';
 
 let frameUpdate = 0;
