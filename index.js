@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
     console.log(`User ${socket.handshake.address} connected.`);
     
     //disconnect
-    io.on('disconnect', (scoket) => {
+    io.on('disconnect', (socket) => {
         console.log(`User ${socket.handshake.address} disconnected.`)
     });
 });
