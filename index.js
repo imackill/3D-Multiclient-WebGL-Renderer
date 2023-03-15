@@ -1,26 +1,32 @@
 const express = require('express');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
+const sock = require('socket.io');
 const http = require('http');
-const { Server } = require('socket.io');
 
 const PORT = 3000;
 
-const server = express();
-const httpServer = http.createServer(server);
-const io = new Server(httpServer);
+const app = express();
+const server = http.createServer(app);
+const io = new sock.Server(server);
 
-server.use(favicon(`${__dirname}/public/assets/favicon.ico`));
+app.use(favicon(`${__dirname}/public/assets/favicon.ico`));
 
-server.use(express.static(`${__dirname}`));
+app.use(express.static(`${__dirname}`));
 
-server.get("/", (req,res) =>{
+app.get("/", (req,res) =>{
     res.sendFile('/index.html', {root: __dirname});
 });
 
 io.on('connection', (socket) => {
     console.log(`User ${socket.handshake.address} connected.`);
 
+    //camerainit
+    io.on('camerainit', (pos) => {
+        console.log(pos);
+    });
+    
+    //disconnect
     io.on('disconnect', (scoket) => {
         console.log(`User ${socket.handshake.address} disconnected.`)
     });

@@ -2,6 +2,8 @@ import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 
+let socket = io();
+
 let frameUpdate = 0;
 
 //Create test scene
@@ -20,6 +22,8 @@ renderer.domElement.addEventListener("click", () => {
 });
 
 $("body").append(renderer.domElement);
+
+socket.emit('camerainit', threeCamera.position);
 
 let RenderJobs = {arr:[]};
 
