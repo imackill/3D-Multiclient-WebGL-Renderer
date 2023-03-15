@@ -3,11 +3,6 @@ import * as models from './models/manifest.js';
 
 let frameUpdate = 0;
 
-fetch("/users_pos")
-    .then(res => res.json())
-    .then(data=>console.log(data))
-    .catch(err => console.error(err));
-
 //Create test scene
 const scene = new THREE.Scene();
 
