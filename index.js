@@ -16,7 +16,7 @@ server.get("/", (req,res) =>{
 });
 
 server.get("/users_pos", (req,res) => {
-    let data = ''//nothing yet
+    let data = {test:"test"}//nothing yet
     res.send(JSON.stringify(data));
 });
 
