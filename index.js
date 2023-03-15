@@ -15,6 +15,11 @@ server.get("/", (req,res) =>{
     res.sendFile('/index.html', {root: __dirname});
 });
 
+server.get("/pos_data", (req,res) => {
+    res.sendFile("/data/userpos.json", {root:`${__dirname}`});
+    console.log(`User ${req.ip} connected.`);
+});
+
 server.listen(PORT, () => {
     console.log(`Listening on port ${PORT}\nroot dir is ${__dirname}`);
 });

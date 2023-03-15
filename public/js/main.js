@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import * as models from './models/manifest.js';
+import * as scripts from './scripts/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 
 let frameUpdate = 0;
@@ -21,7 +22,9 @@ renderer.domElement.addEventListener("click", () => {
 
 $("body").append(renderer.domElement);
 
-let RenderJobs = {arr:[]}
+let playerData = await scripts.getUserData();
+
+let RenderJobs = {arr:[]};
 
 //cube test
 let movingcubeTest = new models.movableCube(
