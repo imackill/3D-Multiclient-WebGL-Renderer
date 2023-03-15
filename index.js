@@ -20,11 +20,6 @@ app.get("/", (req,res) =>{
 
 io.on('connection', (socket) => {
     console.log(`User ${socket.handshake.address} connected.`);
-
-    //camerainit
-    io.on('camerainit', (pos) => {
-        console.log(pos);
-    });
     
     //disconnect
     io.on('disconnect', (scoket) => {
