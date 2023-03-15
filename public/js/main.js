@@ -38,13 +38,11 @@ let movingcubeTest = new models.movableCube(
         //onupdate
     },
     ()=>{
-        //oninit
+        movingcubeTest.drx+=0.01;
     }
 );
 
 movingcubeTest.initElement();
-
-movingcubeTest.drx+=0.01;
 
 RenderJobs.arr.push(movingcubeTest);
 
