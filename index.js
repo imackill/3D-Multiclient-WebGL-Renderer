@@ -12,12 +12,7 @@ server.use(favicon(`${__dirname}/public/assets/favicon.ico`));
 server.use(express.static(`${__dirname}`));
 
 server.get("/", (req,res) =>{
-    res.sendFile(`/`, {root: __dirname});
-});
-
-server.get("/users_pos", (req,res) => {
-    let data = {test:"test"}//nothing yet
-    res.send(JSON.stringify(data));
+    res.sendFile('/index.html', {root: __dirname});
 });
 
 server.listen(PORT, () => {
