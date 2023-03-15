@@ -28,7 +28,7 @@ export class KeyboardPerspectiveCamera extends THREE.PerspectiveCamera{
                     break;
             
                 default:
-                    console.log(event);
+                    //pass
                     break;
             }
         });
@@ -37,7 +37,6 @@ export class KeyboardPerspectiveCamera extends THREE.PerspectiveCamera{
         this.position.z = pos.z;
 
         document.addEventListener("mousemove", (event) => {
-            console.log(`(${event.clientX},${event.clientY})`);
             this.mouse.pos.x = (event.clientX / window.innerWidth) * 2 - 1;
             this.mouse.pos.y = (event.clientY / window.innerHeight) * 2 - 1;
             this.mouse.pos.dx = this.mouse.origin.x - this.mouse.pos.x;
