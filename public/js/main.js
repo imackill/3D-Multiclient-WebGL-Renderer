@@ -1,46 +1,32 @@
 import * as THREE from "three";
 import * as models from './models/manifest.js';
+import { PointerLockControls } from 'PointerLockControls';
 
 let frameUpdate = 0;
 
 //Create test scene
 const scene = new THREE.Scene();
 
-//camera tests
-let threeCamera = new models.KeyboardPerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000,
-    scene,
-    {x:0,y:0,z:5},
-    {x:0,y:0,z:0}
-    );
+let threeCamera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 
 const renderer = new THREE.WebGLRenderer({alpha: true});
 renderer.setClearColor( 0xffffff, 0);
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+const controls = new PointerLockControls(threeCamera, renderer.domElement);
+
+renderer.domElement.addEventListener("click", () => {
+    controls.lock();
+});
+
 $("body").append(renderer.domElement);
 
 let RenderJobs = {arr:[]}
 
-//test cube for camera test
-let cubeTest = new models.immovableCube(
-    "test",
-    {x:0,y:0,z:0},
-    1,
-    THREE.BoxGeometry,
-    THREE.MeshBasicMaterial,
-    THREE.Mesh,
-    {color:0xff0000, wireframe:false},
-    scene,
-    {x:0,y:0,z:0},
-    );
-cubeTest.initElement();
-
+//cube test
 let movingcubeTest = new models.movableCube(
     "moving",
-    {x:3,y:0,z:0},
+    {x:0,y:0,z:-5},
     1,
     THREE.BoxGeometry,
     THREE.MeshBasicMaterial,
