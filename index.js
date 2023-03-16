@@ -27,7 +27,13 @@ io.on('connection', (socket) => {
         pos_data[`${socket.handshake.address}`] = worldData;
         fs.writeFileSync('data/userpos.json',JSON.stringify(pos_data));
     });
-    
+
+    socket.on("disconnect", () => {
+        let pos_data = JSON.parse(fs.readFileSync('data/userpos.json'));
+        delete pos_data[`${socket.handshake.address}`];
+        fs.writeFileSync('data/userpos.json', JSON.stringify(pos_data));
+        console.log(`${socket.handshake.address} disconnected.`);
+    });    
 });
 
 server.listen(PORT, () => {

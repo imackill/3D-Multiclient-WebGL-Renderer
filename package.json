@@ -4,7 +4,7 @@
   "description": "Initial version of a multi-client three.js web renderer.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon run index.js",
+    "dev": "nodemon run index.js --ignore '*.json'",
     "vanilla": "node index.js"
   },
   "repository": {
