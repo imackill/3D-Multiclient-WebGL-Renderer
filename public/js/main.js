@@ -28,7 +28,7 @@ socket.emit('camerainit', threeCamera.position);
 let RenderJobs = {arr:[]};
 
 //custom polyhedron
-let polyhedron_01 = new models.immovablePolyhedron(
+let polyhedron_02 = new models.movablePolyhedron(
     "I hate threejs polyhedrons",
     {x:0,y:0,z:-7},
     [
@@ -44,15 +44,22 @@ let polyhedron_01 = new models.immovablePolyhedron(
         new THREE.Vector3(2,3,1),
     ],
     3,
-    50,
+    20,
     THREE.MeshBasicMaterial,
     {color:0x000000, wireframe:true},
-    scene
+    scene,
+    {x:0,y:0,z:0,w:0},
+    ()=>{
+        //onupdate
+    },
+    ()=>{
+        polyhedron_02.dry+=0.01
+    }
 );
 
-RenderJobs.arr.push(polyhedron_01);
+RenderJobs.arr.push(polyhedron_02);
 
-polyhedron_01.initElement();
+polyhedron_02.initElement();
 
 //final animation and rendering
 function animate() {

@@ -10,7 +10,8 @@ export class immovablePolyhedron {
         detail=20,//more = smoother
         material,
         materialArgs,
-        scene
+        scene,
+        oninit=()=>{}
     ){
         this.scene = scene;
         this.name = name;
@@ -23,6 +24,7 @@ export class immovablePolyhedron {
         this.faces = [];
         this.mesh = null;
         this.frame = null;
+        this.oninit = oninit;
         vertexArray.forEach(elem => {
             this.vertices.push(elem.x);
             this.vertices.push(elem.y);
@@ -40,7 +42,7 @@ export class immovablePolyhedron {
                 polymesh.position.set(this.position.x,this.position.y,this.position.z);
                 this.mesh = polymesh;
                 this.scene.add(polymesh);
-                console.log(this);
+                this.oninit();
             }catch(e){
                 console.error(e)
             }
