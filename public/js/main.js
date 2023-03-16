@@ -2,6 +2,7 @@ import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 
+
 let socket = io();
 
 let frameUpdate = 0;
@@ -23,7 +24,29 @@ renderer.domElement.addEventListener("click", () => {
 
 $("body").append(renderer.domElement);
 
-socket.emit('camerainit', threeCamera.position);
+let speed = 0.1, maxSpeed = 0.1, friction = 0.91, 
+    position = { x: 0, y: 0, z: 0 },
+    velocity = { x: 0, y: 0, z: 0 },
+    rotation = 0, keyPressed = {};
+
+let update = () => {
+    if (keyPressed["w"] && velocity.z > -maxSpeed) velocity.z -= speed;
+    if (keyPressed["s"] && velocity.z < maxSpeed) velocity.z += speed;
+    if (keyPressed["a"] && velocity.x > -maxSpeed) velocity.x -= speed;
+    if (keyPressed["d"] && velocity.x < maxSpeed) velocity.x += speed;
+    velocity.z *= friction;
+    velocity.x *= friction;
+    position.z += velocity.z * Math.cos(threeCamera.rotation.x);
+    position.x += velocity.z * Math.sin(threeCamera.rotation.y); 
+    position.z -= velocity.x * Math.sin(threeCamera.rotation.y); 
+    position.x += velocity.x * Math.cos(threeCamera.rotation.x);
+};
+
+setInterval(update, 10);
+
+document.addEventListener('keydown', e => keyPressed[e.key] = true);
+document.addEventListener('keyup', e => keyPressed[e.key] = false);
+document.addEventListener('resize', e => renderer.setSize(innerWidth, innerHeight));
 
 let RenderJobs = {arr:[]};
 
@@ -58,6 +81,17 @@ let polyhedron_02 = new models.movablePolyhedron(
 );
 
 RenderJobs.arr.push(polyhedron_02);
+RenderJobs.arr.push(
+    {
+        update: () => {
+        threeCamera.position.x = position.x;
+        threeCamera.position.z = position.z;
+    },
+        initElement: () => {
+            socket.emit('camerainit', threeCamera.position);
+        }
+    }
+);
 
 RenderJobs.arr.forEach(elem => elem.initElement());
 

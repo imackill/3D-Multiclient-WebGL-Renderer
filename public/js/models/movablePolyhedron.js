@@ -46,7 +46,6 @@ export class movablePolyhedron extends immovablePolyhedron{
                 this.rotation.y,
                 this.rotation.z
             );
-            console.log(this.drx);
         }
     }
 }
