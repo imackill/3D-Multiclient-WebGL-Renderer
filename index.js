@@ -3,6 +3,7 @@ const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 const sock = require('socket.io');
 const http = require('http');
+const fs = require('fs');
 
 const PORT = 8888;
 
@@ -20,11 +21,13 @@ app.get("/", (req,res) =>{
 
 io.on('connection', (socket) => {
     console.log(`User ${socket.handshake.address} connected.`);
-    
-    //disconnect
-    io.on('disconnect', (socket) => {
-        console.log(`User ${socket.handshake.address} disconnected.`)
+
+    socket.on("camera move", (worldData) => {
+        let pos_data = JSON.parse(fs.readFileSync('data/userpos.json'));
+        pos_data[`${socket.handshake.address}`] = worldData;
+        fs.writeFileSync('data/userpos.json',JSON.stringify(pos_data));
     });
+    
 });
 
 server.listen(PORT, () => {

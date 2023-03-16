@@ -77,9 +77,10 @@ RenderJobs.arr.push(
         threeCamera.position.x = position.x;
         threeCamera.position.y = position.y;
         threeCamera.position.z = position.z;
+        socket.emit("camera move", {position:threeCamera.position,rotation:threeCamera.rotation});
     },
         initElement: () => {
-            socket.emit('camerainit', threeCamera.position);
+            
         }
     },
     plane_01
