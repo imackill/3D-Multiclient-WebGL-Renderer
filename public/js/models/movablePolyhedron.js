@@ -4,7 +4,7 @@ import { immovablePolyhedron } from "./manifest.js";
 export class movablePolyhedron extends immovablePolyhedron{
     constructor(//honestly this shape is  specific and not user friendly (neither is the base class)
         name,
-        pos,
+        pos=new THREE.Vector3(0,0,0),
         vertexArray,//array of {x:,y:,z:} objects (points)
         faceArray,//indices
         radius,

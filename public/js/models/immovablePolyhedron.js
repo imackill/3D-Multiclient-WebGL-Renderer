@@ -3,7 +3,7 @@ import * as THREE from "three";
 export class immovablePolyhedron {
     constructor(
         name,
-        pos,
+        pos=new THREE.Vector3(0,0,0),
         vertexArray,//array of {x:,y:,z:} objects (points)
         faceArray,//same as verticies, with more poitns than vertices
         radius,

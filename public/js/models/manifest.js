@@ -3,11 +3,15 @@ import { immovableLight } from './immovableLight.js';
 import { movableCube } from './movableCube.js';
 import { immovablePolyhedron } from './immovablePolyhedron.js';
 import { movablePolyhedron } from './movablePolyhedron.js';
+import { Plane } from './Plane.js';
+import { TextureLoader } from './textureLoader.js';
 
 export {
     immovableCube,
     immovableLight,
     movableCube,
     immovablePolyhedron,
-    movablePolyhedron
+    movablePolyhedron,
+    Plane,
+    TextureLoader,
 };

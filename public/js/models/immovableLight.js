@@ -2,7 +2,7 @@ import * as THREE from 'three';
 export class immovableLight{
     constructor(
         objName="Light",
-        pos,
+        pos=new THREE.Vector3(0,0,0),
         color=0xffffff,
         intensity=1,
         //types are PointLight, SpotLight, DirectionalLight, HemisphereLight, AmbientLight, RectAreaLight

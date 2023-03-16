@@ -13,7 +13,7 @@ const scene = new THREE.Scene();
 let threeCamera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 
 const renderer = new THREE.WebGLRenderer({alpha: true});
-renderer.setClearColor( 0xffffff, 0);
+renderer.setClearColor( 0xADD8E6, 1);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 const controls = new PointerLockControls(threeCamera, renderer.domElement);
@@ -50,37 +50,23 @@ document.addEventListener('resize', e => renderer.setSize(innerWidth, innerHeigh
 
 let RenderJobs = {arr:[]};
 
-//custom polyhedron test: movement
-let polyhedron_02 = new models.movablePolyhedron(
-    "I hate threejs polyhedrons",
-    {x:0,y:0,z:-7},
-    [
-        new THREE.Vector3(1,1,1),
-        new THREE.Vector3(-1,-1,1),
-        new THREE.Vector3(-1,1,-1),
-        new THREE.Vector3(1,-1,-1),
-    ],
-    [
-        new THREE.Vector3(2,1,0),
-        new THREE.Vector3(0,3,2),
-        new THREE.Vector3(1,3,0),
-        new THREE.Vector3(2,3,1),
-    ],
-    3,
-    20,
-    THREE.MeshBasicMaterial,
-    {color:0x000000, wireframe:true},
-    scene,
-    {x:0,y:0,z:0,w:0},
-    ()=>{
-        //onupdate
+let plane_01 = new models.Plane(
+    "plane test",
+    {width:100,height:100,wSegments:1,hSegments:1},
+    models.TextureLoader,
+    {
+        url:'public/assets/textures/floortexture.jpeg',
+        material: THREE.MeshBasicMaterial
     },
-    ()=>{
-        polyhedron_02.dry+=0.01
-    }
-);
+    new THREE.Vector3(0,-6,-5),
+    new THREE.Quaternion(-1.6,0,0,0),
+    scene,
+    () => {
+        console.log(`Initialized "${plane_01.name}"`);
+    },
+    () => {}
+)
 
-RenderJobs.arr.push(polyhedron_02);
 RenderJobs.arr.push(
     {
         update: () => {
@@ -90,7 +76,8 @@ RenderJobs.arr.push(
         initElement: () => {
             socket.emit('camerainit', threeCamera.position);
         }
-    }
+    },
+    plane_01
 );
 
 RenderJobs.arr.forEach(elem => elem.initElement());

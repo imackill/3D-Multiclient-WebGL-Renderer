@@ -1,6 +1,6 @@
 export class immovableCube{
     constructor(objName,
-    pos,
+    pos=new THREE.Vector3(0,0,0),
     edgeLength,
     geometry,
     material,

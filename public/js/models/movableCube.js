@@ -2,7 +2,7 @@ import { immovableCube } from "./manifest.js";
 export class movableCube extends immovableCube{
     constructor(
         objName,
-        pos,
+        pos=new THREE.Vector3(0,0,0),
         edgeLength,
         geometry,
         material,
