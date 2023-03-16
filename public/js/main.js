@@ -27,19 +27,23 @@ $("body").append(renderer.domElement);
 let speed = 0.1, maxSpeed = 0.1, friction = 0.91, 
     position = { x: 0, y: 0, z: 0 },
     velocity = { x: 0, y: 0, z: 0 },
-    rotation = 0, keyPressed = {};
+    keyPressed = {};
 
 let update = () => {
     if (keyPressed["w"] && velocity.z > -maxSpeed) velocity.z -= speed;
     if (keyPressed["s"] && velocity.z < maxSpeed) velocity.z += speed;
     if (keyPressed["a"] && velocity.x > -maxSpeed) velocity.x -= speed;
     if (keyPressed["d"] && velocity.x < maxSpeed) velocity.x += speed;
+    if (keyPressed["Shift"] && velocity.y > -maxSpeed) velocity.y -= speed;
+    if (keyPressed[" "] && velocity.y < maxSpeed) velocity.y += speed;
     velocity.z *= friction;
     velocity.x *= friction;
+    velocity.y *= friction;
     position.z += velocity.z * Math.cos(threeCamera.rotation.x);
     position.x += velocity.z * Math.sin(threeCamera.rotation.y); 
     position.z -= velocity.x * Math.sin(threeCamera.rotation.y); 
     position.x += velocity.x * Math.cos(threeCamera.rotation.x);
+    position.y += velocity.y;
 };
 
 setInterval(update, 10);
@@ -71,6 +75,7 @@ RenderJobs.arr.push(
     {
         update: () => {
         threeCamera.position.x = position.x;
+        threeCamera.position.y = position.y;
         threeCamera.position.z = position.z;
     },
         initElement: () => {
