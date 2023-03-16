@@ -27,7 +27,7 @@ socket.emit('camerainit', threeCamera.position);
 
 let RenderJobs = {arr:[]};
 
-//custom polyhedron
+//custom polyhedron test: movement
 let polyhedron_02 = new models.movablePolyhedron(
     "I hate threejs polyhedrons",
     {x:0,y:0,z:-7},
@@ -59,7 +59,7 @@ let polyhedron_02 = new models.movablePolyhedron(
 
 RenderJobs.arr.push(polyhedron_02);
 
-polyhedron_02.initElement();
+RenderJobs.arr.forEach(elem => elem.initElement());
 
 //final animation and rendering
 function animate() {
