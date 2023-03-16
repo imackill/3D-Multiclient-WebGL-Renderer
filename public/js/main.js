@@ -24,7 +24,7 @@ renderer.domElement.addEventListener("click", () => {
 
 $("body").append(renderer.domElement);
 
-let speed = 0.1, maxSpeed = 0.1, friction = 0.91, 
+let speed = 0.2, maxSpeed = speed, friction = 0.91, 
     position = { x: 0, y: 0, z: 0 },
     velocity = { x: 0, y: 0, z: 0 },
     keyPressed = {};
