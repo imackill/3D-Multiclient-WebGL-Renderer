@@ -21,11 +21,14 @@ app.get("/", (req,res) =>{
 
 io.on('connection', (socket) => {
     console.log(`User ${socket.handshake.address} connected.`);
+    let pos_data = JSON.parse(fs.readFileSync('data/userpos.json'));
+    socket.emit("player connected", pos_data);
 
     socket.on("camera move", (worldData) => {
         let pos_data = JSON.parse(fs.readFileSync('data/userpos.json'));
         pos_data[`${socket.handshake.address}`] = worldData;
         fs.writeFileSync('data/userpos.json',JSON.stringify(pos_data));
+        socket.emit("player update", [pos_data, socket.handshake.address]);
     });
 
     socket.on("disconnect", () => {

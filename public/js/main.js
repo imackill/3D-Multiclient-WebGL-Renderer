@@ -2,7 +2,6 @@ import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 
-
 let socket = io();
 
 let frameUpdate = 0;
@@ -52,7 +51,41 @@ document.addEventListener('keydown', e => keyPressed[e.key] = true);
 document.addEventListener('keyup', e => keyPressed[e.key] = false);
 document.addEventListener('resize', e => renderer.setSize(innerWidth, innerHeight));
 
-let RenderJobs = {arr:[]};
+let RenderJobs = {players:[],arr:[]};
+
+//player preset (temp)
+let preset = {
+    geometry:THREE.BoxGeometry,
+    material:THREE.MeshStandardMaterial,
+    texture:{
+        included:false,
+        url:''
+    },
+    position: new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z,),
+    rotation: new THREE.Quaternion(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z,),
+    color:0xff00f0,
+    wireframe:true,
+    size:{box:1},
+    extra:{},
+    scene
+}
+
+let localworldArray;
+socket.on("player connect", (predata) => {
+    localworldArray = Object.keys(predata).map(elem => {
+        elem = {elem:predata[elem]};
+    });
+});
+
+socket.on("player update", (data) => {
+    let useraddress = data[1];
+    let worldData = data[0];
+    delete worldData[useraddress];
+    let globalworldArray = Object.keys(worldData).map(elem => {
+        elem = {elem:worldData[elem]};
+    });
+    localworldArray = globalworldArray;
+});
 
 let plane_01 = new models.Plane(
     "plane test",
@@ -80,7 +113,7 @@ RenderJobs.arr.push(
         socket.emit("camera move", {position:threeCamera.position,rotation:threeCamera.rotation});
     },
         initElement: () => {
-            
+
         }
     },
     plane_01
@@ -94,6 +127,7 @@ function animate() {
     RenderJobs.arr.forEach((elem)=>elem.update(frameUpdate));
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
+    console.log({"worldArrL":localworldArray});
 }
 
 animate();

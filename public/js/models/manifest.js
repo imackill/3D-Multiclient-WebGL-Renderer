@@ -5,6 +5,7 @@ import { immovablePolyhedron } from './immovablePolyhedron.js';
 import { movablePolyhedron } from './movablePolyhedron.js';
 import { Plane } from './Plane.js';
 import { TextureLoader } from './textureLoader.js';
+import { playerPreset } from './playerpreset.js';
 
 export {
     immovableCube,
@@ -14,4 +15,5 @@ export {
     movablePolyhedron,
     Plane,
     TextureLoader,
+    playerPreset
 };
