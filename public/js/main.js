@@ -70,9 +70,11 @@ let preset = {
     scene
 }
 
-let localworldArray;
+var globalworldArray = [];
+
 socket.on("player connect", (predata) => {
-    localworldArray = Object.keys(predata).map(elem => {
+    console.log(predata);
+    globalworldArray = Object.keys(predata).map(elem => {
         elem = {elem:predata[elem]};
     });
 });
@@ -80,11 +82,11 @@ socket.on("player connect", (predata) => {
 socket.on("player update", (data) => {
     let useraddress = data[1];
     let worldData = data[0];
-    delete worldData[useraddress];
-    let globalworldArray = Object.keys(worldData).map(elem => {
-        elem = {elem:worldData[elem]};
+    globalworldArray = Object.keys(worldData).map(elem => {
+        let dict = {};
+        dict[`${elem.toString()}`] = worldData[elem];
+        return dict;
     });
-    localworldArray = globalworldArray;
 });
 
 let plane_01 = new models.Plane(
@@ -127,7 +129,6 @@ function animate() {
     RenderJobs.arr.forEach((elem)=>elem.update(frameUpdate));
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
-    console.log({"worldArrL":localworldArray});
 }
 
 animate();
