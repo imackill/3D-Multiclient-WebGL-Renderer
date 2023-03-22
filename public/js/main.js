@@ -164,7 +164,7 @@ function animate() {
     RenderJobs.players.forEach((elem)=>elem.update(worldData));
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
-    console.log(RenderJobs.players);
+    console.log(scene);
 }
 
 animate();
