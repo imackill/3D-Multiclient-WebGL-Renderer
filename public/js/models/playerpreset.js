@@ -25,10 +25,10 @@ export class playerPreset{
             this.material = new this.material({color:this.color, wireframe:this.wireframe});
         }
         this.mesh = new THREE.Mesh(new this.geometry(this.size.box),this.material);
+        this.mesh.name = this.name;
         this.initElement = () => {
             this.mesh.position.set(position.x,position.y,position.z);
             this.mesh.rotation.set(rotation.x,rotation.y,rotation.z);
-            this.group.add(this.mesh);
             this.id = this.mesh.id;
         }
         this.update = (worldData) => {

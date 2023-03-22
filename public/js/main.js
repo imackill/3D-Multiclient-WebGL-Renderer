@@ -58,7 +58,7 @@ const immovable_objectGroup = new THREE.Group();
 //player preset (temp)
 let preset = {
     geometry:THREE.BoxGeometry,
-    material:THREE.MeshStandardMaterial,
+    material:THREE.MeshBasicMaterial,
     texture:{
         included:false,
         url:'',
@@ -67,7 +67,7 @@ let preset = {
     },
     position: new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z,),
     rotation: new THREE.Quaternion(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z,),
-    color:0xff00f0,
+    color:0x000000,
     wireframe:true,
     size:{box:1},
     extra:{},
@@ -109,6 +109,7 @@ socket.on("player update", (data) => {
                 preset
             );
             RenderJobs.players.push(playerObject);
+            scene.add(playerObject.mesh);
         }else{
             return;
         }
@@ -126,7 +127,7 @@ let plane_01 = new models.Plane(
         repeat: new THREE.Vector2(10,10),
     },
     new THREE.Vector3(0,-6,-5),
-    new THREE.Quaternion(-1.6,0,0,0),
+    new THREE.Quaternion((3*Math.PI)/2,0,0,0),
     immovable_objectGroup,
     () => {
         console.log(`Initialized "${plane_01.name}"`);
