@@ -71,7 +71,7 @@ let preset = {
     wireframe:true,
     size:{box:1},
     extra:{},
-    scene
+    group:scene,
 }
 
 let globalworldArray = [];
