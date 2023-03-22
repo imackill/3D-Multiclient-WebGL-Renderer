@@ -6,7 +6,7 @@ export class immovableCube{
     material,
     meshType,
     materialOptions,
-    scene,
+    group,
     rotation
     ){
         this.lifespan = 0;
@@ -17,8 +17,8 @@ export class immovableCube{
         this.material = material;
         this.meshType = meshType;
         this.materialOptions = materialOptions;
-        this.scene = scene;
-        this.sceneObject;
+        this.group = group;
+        this.groupObject;
         this.rotation = rotation;
         let cubeEvent = new CustomEvent("oncubeinit", {"detail":"when a new cube object is initialized"})
         this.initElement = () => {
@@ -31,8 +31,8 @@ export class immovableCube{
             cube.rotation.x = this.rotation.x;
             cube.rotation.y = this.rotation.y;
             cube.rotation.z = this.rotation.z;
-            this.sceneObject = cube;
-            this.scene.add(cube);
+            this.groupObject = cube;
+            this.group.add(cube);
             document.dispatchEvent(cubeEvent);
             setInterval(()=>this.lifespan+=1,1000);
         };

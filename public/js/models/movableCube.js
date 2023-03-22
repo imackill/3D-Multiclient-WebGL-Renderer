@@ -8,12 +8,12 @@ export class movableCube extends immovableCube{
         material,
         meshType,
         materialOptions,
-        scene,
+        group,
         rotation,
         onupdate=(options={})=>{},
         oninit=(options={})=>{}
     ){
-        super(objName,pos,edgeLength,geometry,material,meshType,materialOptions,scene,rotation);
+        super(objName,pos,edgeLength,geometry,material,meshType,materialOptions,group,rotation);
         this.dx = 0;
         this.dy = 0;
         this.dz = 0;
@@ -29,7 +29,7 @@ export class movableCube extends immovableCube{
             this.pos.x+=this.dx;
             this.pos.y+=this.dy;
             this.pos.z+=this.dz;
-            this.sceneObject.position.set(
+            this.groupObject.position.set(
                 this.pos.x,
                 this.pos.y,
                 this.pos.z
@@ -37,7 +37,7 @@ export class movableCube extends immovableCube{
             this.rotation.x+=this.drx;
             this.rotation.y+=this.dry;
             this.rotation.z+=this.drz;
-            this.sceneObject.rotation.set(
+            this.groupObject.rotation.set(
                 this.rotation.x,
                 this.rotation.y,
                 this.rotation.z,

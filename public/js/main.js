@@ -3,7 +3,7 @@ import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 
 let socket = io();
-
+let worldData = {};
 let frameUpdate = 0;
 
 //Create test scene
@@ -49,9 +49,11 @@ setInterval(update, 10);
 
 document.addEventListener('keydown', e => keyPressed[e.key] = true);
 document.addEventListener('keyup', e => keyPressed[e.key] = false);
-document.addEventListener('resize', e => renderer.setSize(innerWidth, innerHeight));
+document.addEventListener('resize', () => renderer.setSize(innerWidth, innerHeight));
 
-let RenderJobs = {players:[],arr:[]};
+const RenderJobs = {groups:[], players:[],arr:[]};
+
+const immovable_objectGroup = new THREE.Group();
 
 //player preset (temp)
 let preset = {
@@ -59,7 +61,9 @@ let preset = {
     material:THREE.MeshStandardMaterial,
     texture:{
         included:false,
-        url:''
+        url:'',
+        wrapping:null,
+        repeat: new THREE.Vector2(0,0),
     },
     position: new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z,),
     rotation: new THREE.Quaternion(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z,),
@@ -70,36 +74,60 @@ let preset = {
     scene
 }
 
-var globalworldArray = [];
+let globalworldArray = [];
 
 socket.on("player connect", (predata) => {
-    console.log(predata);
     globalworldArray = Object.keys(predata).map(elem => {
         elem = {elem:predata[elem]};
+    });
+    globalworldArray.forEach(playerData => {
+        let playerObject = new models.playerPreset(
+            Object.keys(playerData),
+            playerData[Object.keys(playerData)[0]].position,
+            playerData[Object.keys(playerData)[0]].rotation,
+            preset
+        );
+        RenderJobs.players.push(playerObject);
     });
 });
 
 socket.on("player update", (data) => {
-    let useraddress = data[1];
-    let worldData = data[0];
+    worldData = data[0];
     globalworldArray = Object.keys(worldData).map(elem => {
         let dict = {};
         dict[`${elem.toString()}`] = worldData[elem];
         return dict;
     });
+    globalworldArray.forEach(playerData => {
+        let playerAddresses = RenderJobs.players.map(i => i.name);
+        let currentAddress = Object.keys(playerData)[0];
+        if(!(playerAddresses.includes(currentAddress))){
+            let playerObject = new models.playerPreset(
+                currentAddress,
+                playerData[Object.keys(playerData)[0]].position,
+                playerData[Object.keys(playerData)[0]].rotation,
+                preset
+            );
+            RenderJobs.players.push(playerObject);
+        }else{
+            return;
+        }
+    });
 });
 
 let plane_01 = new models.Plane(
     "plane test",
-    {width:100,height:100,wSegments:1,hSegments:1},
+    {width:100,height:100,wSegments:10,hSegments:10},
     models.TextureLoader,
     {
         url:'public/assets/textures/floortexture.jpeg',
-        material: THREE.MeshBasicMaterial
+        material: THREE.MeshBasicMaterial,
+        wrapping: THREE.RepeatWrapping,
+        repeat: new THREE.Vector2(10,10),
     },
     new THREE.Vector3(0,-6,-5),
     new THREE.Quaternion(-1.6,0,0,0),
-    scene,
+    immovable_objectGroup,
     () => {
         console.log(`Initialized "${plane_01.name}"`);
     },
@@ -115,20 +143,28 @@ RenderJobs.arr.push(
         socket.emit("camera move", {position:threeCamera.position,rotation:threeCamera.rotation});
     },
         initElement: () => {
-
+            console.log(`Initialized Camera`);
         }
     },
     plane_01
 );
+RenderJobs.groups.push(immovable_objectGroup);
 
 RenderJobs.arr.forEach(elem => elem.initElement());
+
+RenderJobs.groups.forEach(elem => {
+    scene.add(elem);
+});
+
 
 //final animation and rendering
 function animate() {
     requestAnimationFrame(animate);
     RenderJobs.arr.forEach((elem)=>elem.update(frameUpdate));
+    RenderJobs.players.forEach((elem)=>elem.update(worldData));
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
+    console.log(RenderJobs.players);
 }
 
 animate();

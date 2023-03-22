@@ -10,10 +10,10 @@ export class immovablePolyhedron {
         detail=20,//more = smoother
         material,
         materialArgs,
-        scene,
+        group,
         oninit=()=>{}
     ){
-        this.scene = scene;
+        this.group = group;
         this.name = name;
         this.position = new THREE.Vector3(pos.x,pos.y,pos.z);
         this.radius = radius;
@@ -41,7 +41,7 @@ export class immovablePolyhedron {
                 let polymesh = new THREE.Mesh(this.geometry, this.mat);
                 polymesh.position.set(this.position.x,this.position.y,this.position.z);
                 this.mesh = polymesh;
-                this.scene.add(polymesh);
+                this.group.add(polymesh);
                 this.oninit();
             }catch(e){
                 console.error(e)

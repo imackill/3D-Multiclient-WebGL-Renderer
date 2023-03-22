@@ -7,7 +7,7 @@ export class immovableLight{
         intensity=1,
         //types are PointLight, SpotLight, DirectionalLight, HemisphereLight, AmbientLight, RectAreaLight
         type,
-        scene,
+        group,
         options={//mainly additional parameters for RectAreaLight and HemisphereLight
             ptLight:{distance:0,decay:2},
             spotLight:{distance:0,angle:Math.PI/4,penumbra:0,decay:2},
@@ -21,7 +21,7 @@ export class immovableLight{
         this.intensity = intensity;
         this.type = type;
         this.options = options;
-        this.scene = scene;
+        this.group = group;
         this.initElement = () => {
             let light;
             switch (this.type) {
@@ -51,7 +51,7 @@ export class immovableLight{
                     break;
             }
             light.position.set(this.pos.x,this.pos.y,this.pos.z);
-            this.scene.add(light)
+            this.group.add(light)
         }
     }
 }

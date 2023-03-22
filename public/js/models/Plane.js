@@ -7,7 +7,7 @@ export class Plane {
     material_args={color:0xf00f00,wireframe:false},
     position=new THREE.Vector3(0,0,0),
     rotation=new THREE.Quaternion(0,0,0,0),
-    scene,
+    group,
     oninit,
     onupdate,
     ){
@@ -23,7 +23,7 @@ export class Plane {
             this.mesh = new THREE.Mesh(this.geo,new this.material(material_args));
             this.mesh.position.set(this.position.x,this.position.y,this.position.z);
             this.mesh.rotation.set(this.rotation.x,this.rotation.y,this.rotation.z);
-            scene.add(this.mesh);
+            group.add(this.mesh);
         }
         this.update = () => {
             onupdate();

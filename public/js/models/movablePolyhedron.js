@@ -11,12 +11,12 @@ export class movablePolyhedron extends immovablePolyhedron{
         detail=20,//more = smoother
         material,
         materialArgs,
-        scene,
+        group,
         rotation,
         onupdate=()=>{},
         oninit=()=>{}
     ){
-        super(name, pos, vertexArray, faceArray, radius, detail, material, materialArgs, scene,oninit)
+        super(name, pos, vertexArray, faceArray, radius, detail, material, materialArgs, group,oninit)
         this.rotation = new THREE.Quaternion(rotation.x,rotation.y,rotation.z,rotation.w);
         this.dx = 0;
         this.dy = 0;

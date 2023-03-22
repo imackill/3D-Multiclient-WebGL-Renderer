@@ -8,6 +8,7 @@ export class playerPreset{
         rotation,
         json
     ){
+        this.name = name;
         this.geometry = json.geometry;
         this.material = json.material;
         this.texture = json.texture;
@@ -15,11 +16,11 @@ export class playerPreset{
         this.wireframe = json.wireframe;
         this.size = json.size;
         this.extra = json.extra;
-        this.scene = json.scene;
+        this.group = json.group;
         this.position = new THREE.Vector3(position.x,position.y,position.z);
         this.rotation = new THREE.Quaternion(rotation.x,rotation.y,rotation.z,rotation.w);
         if(this.texture.incuded){
-            this.material = new TextureLoader({url: this.texture.url, material:this.material})
+            this.material = new TextureLoader({url: this.texture.url, material:this.material, wrapping:this.texture.wrapping, repeat:this.texture.repeat})
         }else{
             this.material = new this.material({color:this.color, wireframe:this.wireframe});
         }
@@ -27,7 +28,8 @@ export class playerPreset{
         this.initElement = () => {
             this.mesh.position.set(position.x,position.y,position.z);
             this.mesh.rotation.set(rotation.x,rotation.y,rotation.z);
-            this.scene.add(this.mesh);
+            this.group.add(this.mesh);
+            this.id = this.mesh.id;
         }
         this.update = (worldData) => {
             let objectData = worldData[this.name];
