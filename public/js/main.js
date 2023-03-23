@@ -89,6 +89,7 @@ socket.on("player connect", (predata) => {
         );
         RenderJobs.players.push(playerObject);
     });
+    console.log(predata);
 });
 
 socket.on("player update", (data) => {
@@ -162,10 +163,11 @@ RenderJobs.groups.forEach(elem => {
 function animate() {
     requestAnimationFrame(animate);
     RenderJobs.arr.forEach((elem)=>elem.update(frameUpdate));
-    RenderJobs.players.forEach((elem)=>elem.update(worldData));
+    RenderJobs.players.forEach((elem)=>{
+        elem.update(worldData);
+    });
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
-    console.log(scene);
 }
 
 animate();

@@ -34,7 +34,7 @@ export class playerPreset{
         this.update = (worldData) => {
             let objectData = worldData[this.name];
             this.mesh.position.set(objectData.position.x,objectData.position.y,objectData.position.z);
-            this.mesh.rotation.set(objectData.rotation.x,objectData.rotation.y,objectData.rotation.z);
+            this.mesh.rotation.set(objectData.rotation._x,objectData.rotation._y,objectData.rotation._z);
         }
     }
 }
