@@ -118,12 +118,6 @@ socket.on("player update", (data) => {
     });
 });
 
-socket.on('user disconnect', (data) => {
-    let disconnectedData = data.data;
-    let disconnectedAddress = data.address;
-    console.log(data);
-});
-
 let light_01 = new models.immovableLight(
     "ambient light",
     new THREE.Vector3(0,0,0),
