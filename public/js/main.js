@@ -58,7 +58,7 @@ const immovable_objectGroup = new THREE.Group();
 //player preset (temp)
 let preset = {
     geometry:THREE.BoxGeometry,
-    material:THREE.MeshBasicMaterial,
+    material:THREE.MeshStandardMaterial,
     texture:{
         included:false,
         url:'',
@@ -67,9 +67,9 @@ let preset = {
     },
     position: new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z,),
     rotation: new THREE.Quaternion(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z,),
-    color:0x000000,
-    wireframe:true,
-    size:{box:1},
+    color:0x00ff00,
+    wireframe:false,
+    size:{box:4},
     extra:{},
     group:scene,
 }
@@ -89,11 +89,12 @@ socket.on("player connect", (predata) => {
         );
         RenderJobs.players.push(playerObject);
     });
-    console.log(predata);
 });
 
 socket.on("player update", (data) => {
     worldData = data[0];
+    let userAddress = data[1];
+    delete data[0][userAddress];
     globalworldArray = Object.keys(worldData).map(elem => {
         let dict = {};
         dict[`${elem.toString()}`] = worldData[elem];
@@ -116,6 +117,21 @@ socket.on("player update", (data) => {
         }
     });
 });
+
+socket.on('user disconnect', (data) => {
+    let disconnectedData = data.data;
+    let disconnectedAddress = data.address;
+    console.log(data);
+});
+
+let light_01 = new models.immovableLight(
+    "ambient light",
+    new THREE.Vector3(0,0,0),
+    0xffffff,
+    1,
+    THREE.AmbientLight,
+    scene
+);
 
 let plane_01 = new models.Plane(
     "plane test",
@@ -148,7 +164,8 @@ RenderJobs.arr.push(
             console.log(`Initialized Camera`);
         }
     },
-    plane_01
+    plane_01,
+    light_01
 );
 RenderJobs.groups.push(immovable_objectGroup);
 
@@ -162,7 +179,9 @@ RenderJobs.groups.forEach(elem => {
 //final animation and rendering
 function animate() {
     requestAnimationFrame(animate);
-    RenderJobs.arr.forEach((elem)=>elem.update(frameUpdate));
+    RenderJobs.arr.forEach((elem)=>{
+    try{elem.update(frameUpdate)}catch(e){/*pass*/}
+});
     RenderJobs.players.forEach((elem)=>{
         elem.update(worldData);
     });

@@ -24,7 +24,7 @@ export class playerPreset{
         }else{
             this.material = new this.material({color:this.color, wireframe:this.wireframe});
         }
-        this.mesh = new THREE.Mesh(new this.geometry(this.size.box),this.material);
+        this.mesh = new THREE.Mesh(new this.geometry(this.size.box, this.size.box, this.size.box),this.material);
         this.mesh.name = this.name;
         this.initElement = () => {
             this.mesh.position.set(position.x,position.y,position.z);
@@ -33,6 +33,7 @@ export class playerPreset{
         }
         this.update = (worldData) => {
             let objectData = worldData[this.name];
+            if(!objectData){return;}
             this.mesh.position.set(objectData.position.x,objectData.position.y,objectData.position.z);
             this.mesh.rotation.set(objectData.rotation._x,objectData.rotation._y,objectData.rotation._z);
         }
