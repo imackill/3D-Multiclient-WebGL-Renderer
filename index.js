@@ -35,7 +35,6 @@ io.on('connection', (socket) => {
         let pos_data = JSON.parse(fs.readFileSync('data/userpos.json'));
         delete pos_data[`${socket.handshake.address}`];
         fs.writeFileSync('data/userpos.json', JSON.stringify(pos_data));
-        socket.broadcast.emit("user disconnect", JSON.stringify({address:`${socket.handshake.address}`,disconnect_data:pos_data[`${socket.handshake.address}`]}));
         console.log(`${socket.handshake.address} disconnected.`);
     });    
 });
