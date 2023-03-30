@@ -1,4 +1,36 @@
 body{
     margin: 0;
     overflow: hidden;
+    position: relative;
+}
+
+#uicontainer, canvas{
+    position: absolute;
+}
+
+#uicontainer{
+    width: 190px;
+    height: 220px;
+    border: 1px solid black;
+    border-top: 0px;
+    border-left: 0px;
+    border-radius: 10px;
+}
+
+#uichatbox{
+    width:190px;
+    height:200px;
+    background-color: gray;
+    opacity: 30%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#chatinput{
+    width: 190px;
+    height: 20px;
+    padding: 0px;
+    border: 0px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
