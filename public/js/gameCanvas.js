@@ -81,6 +81,7 @@ socket.on("player connect", (predata) => {
         elem = {elem:predata[elem]};
     });
     globalworldArray.forEach(playerData => {
+        if(!playerData)return;
         let playerObject = new models.playerPreset(
             Object.keys(playerData),
             playerData[Object.keys(playerData)[0]].position,
@@ -169,15 +170,14 @@ RenderJobs.groups.forEach(elem => {
     scene.add(elem);
 });
 
-
 //final animation and rendering
 function animate() {
     requestAnimationFrame(animate);
     RenderJobs.arr.forEach((elem)=>{
-    try{elem.update(frameUpdate)}catch(e){/*pass*/}
-});
+        try{elem.update(frameUpdate)}catch(e){/*pass*/}
+    });
     RenderJobs.players.forEach((elem)=>{
-        elem.update(worldData);
+        elem.update(worldData, immovable_objectGroup.children);
     });
     renderer.render(scene, threeCamera);
     frameUpdate+=1;

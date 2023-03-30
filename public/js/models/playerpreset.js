@@ -19,6 +19,7 @@ export class playerPreset{
         this.group = json.group;
         this.position = new THREE.Vector3(position.x,position.y,position.z);
         this.rotation = new THREE.Quaternion(rotation.x,rotation.y,rotation.z,rotation.w);
+        this.boundingbox = new THREE.Box3();
         if(this.texture.incuded){
             this.material = new TextureLoader({url: this.texture.url, material:this.material, wrapping:this.texture.wrapping, repeat:this.texture.repeat})
         }else{
@@ -31,11 +32,13 @@ export class playerPreset{
             this.mesh.rotation.set(rotation.x,rotation.y,rotation.z);
             this.id = this.mesh.id;
         }
-        this.update = (worldData) => {
+        this.update = (worldData,collideables) => {
             let objectData = worldData[this.name];
             if(!objectData){return this.group.remove(this.mesh);}
             this.mesh.position.set(objectData.position.x,objectData.position.y,objectData.position.z);
             this.mesh.rotation.set(objectData.rotation._x,objectData.rotation._y,objectData.rotation._z);
+            this.mesh.geometry.computeBoundingBox();
+            this.boundingbox.copy(this.mesh.geometry.boundingBox).applyMatrix4(this.mesh.matrixWorld);
         }
     }
 }
