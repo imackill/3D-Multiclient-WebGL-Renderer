@@ -81,7 +81,6 @@ socket.on("player_connect", (predata) => {
         elem = {elem:predata[elem]};
     });
     globalworldArray.forEach(playerData => {
-        console.log(playerData);
         if(!playerData)return;
         let playerObject = new models.playerPreset(
             Object.keys(playerData),

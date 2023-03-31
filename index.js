@@ -22,7 +22,7 @@ app.get("/", (req,res) =>{
 io.on('connection', (socket) => {
     console.log(`User ${socket.handshake.address} connected.`);
     let pos_data = JSON.parse(fs.readFileSync('data/userpos.json'));
-    socket.broadcast.emit("player_connect", pos_data);
+    socket.emit("player_connect", pos_data);
 
     socket.on("camera move", (worldData) => {
         let pos_data = JSON.parse(fs.readFileSync('data/userpos.json'));
