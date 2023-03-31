@@ -77,7 +77,6 @@ let preset = {
 let globalworldArray = [];
 
 socket.on("player_connect", (predata) => {
-    console.log(`Connected.`);
     globalworldArray = Object.keys(predata).map(elem => {
         elem = {elem:predata[elem]};
     });
@@ -94,6 +93,7 @@ socket.on("player_connect", (predata) => {
 });
 
 socket.on("player_update", (data) => {
+    console.log(data);
     worldData = data[0];
     let userAddress = data[1];
     delete data[0][userAddress];
