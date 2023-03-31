@@ -77,6 +77,7 @@ let preset = {
 let globalworldArray = [];
 
 socket.on("player_connect", (predata) => {
+    console.log(`Connected.`);
     globalworldArray = Object.keys(predata).map(elem => {
         elem = {elem:predata[elem]};
     });
