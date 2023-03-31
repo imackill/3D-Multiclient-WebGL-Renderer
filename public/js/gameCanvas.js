@@ -81,6 +81,7 @@ socket.on("player connect", (predata) => {
         elem = {elem:predata[elem]};
     });
     globalworldArray.forEach(playerData => {
+        console.log(playerData);
         if(!playerData)return;
         let playerObject = new models.playerPreset(
             Object.keys(playerData),
@@ -181,7 +182,6 @@ function animate() {
     });
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
-    console.log(scene, globalworldArray);
 }
 
 animate();
