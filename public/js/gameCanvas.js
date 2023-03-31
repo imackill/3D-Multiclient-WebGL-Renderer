@@ -93,6 +93,7 @@ socket.on("player_connect", (predata) => {
 });
 
 socket.on("player_update", (data) => {
+    console.log(worldData);
     worldData = data[0];
     let userAddress = data[1];
     delete data[0][userAddress];
@@ -101,7 +102,6 @@ socket.on("player_update", (data) => {
         dict[`${elem.toString()}`] = worldData[elem];
         return dict;
     });
-    console.log(worldData);
     globalworldArray.forEach(playerData => {
         let playerAddresses = RenderJobs.players.map(i => i.name);
         let currentAddress = Object.keys(playerData)[0];
