@@ -32,7 +32,7 @@ export class playerPreset{
             this.mesh.rotation.set(rotation.x,rotation.y,rotation.z);
             this.id = this.mesh.id;
         }
-        this.update = (worldData,collideables) => {
+        this.update = (worldData) => {
             let objectData = worldData[this.name];
             if(!objectData){return this.group.remove(this.mesh);}
             this.mesh.position.set(objectData.position.x,objectData.position.y,objectData.position.z);

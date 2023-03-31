@@ -181,6 +181,7 @@ function animate() {
     });
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
+    console.log(scene, globalworldArray);
 }
 
 animate();
