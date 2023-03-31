@@ -101,6 +101,7 @@ socket.on("player_update", (data) => {
         dict[`${elem.toString()}`] = worldData[elem];
         return dict;
     });
+    console.log(worldData);
     globalworldArray.forEach(playerData => {
         let playerAddresses = RenderJobs.players.map(i => i.name);
         let currentAddress = Object.keys(playerData)[0];
