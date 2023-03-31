@@ -93,7 +93,6 @@ socket.on("player_connect", (predata) => {
 });
 
 socket.on("player_update", (data) => {
-    console.log(data);
     worldData = data[0];
     let userAddress = data[1];
     delete data[0][userAddress];
@@ -182,6 +181,7 @@ function animate() {
     });
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
+    console.log(globalworldArray);
 }
 
 animate();
