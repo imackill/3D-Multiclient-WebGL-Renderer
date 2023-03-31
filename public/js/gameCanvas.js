@@ -93,7 +93,6 @@ socket.on("player_connect", (predata) => {
 });
 
 socket.on("player_update", (data) => {
-    console.log(worldData);
     worldData = data[0];
     let userAddress = data[1];
     delete data[0][userAddress];
