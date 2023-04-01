@@ -77,10 +77,13 @@ let preset = {
 let globalworldArray = [];
 
 socket.on("player_connect", (predata) => {
+    console.log(predata);
     globalworldArray = Object.keys(predata).map(elem => {
         elem = {elem:predata[elem]};
     });
+    console.log(globalworldArray);
     globalworldArray.forEach(playerData => {
+        console.log(playerData)
         if(!playerData)return;
         let playerObject = new models.playerPreset(
             Object.keys(playerData),
@@ -88,14 +91,18 @@ socket.on("player_connect", (predata) => {
             playerData[Object.keys(playerData)[0]].rotation,
             preset
         );
+        console.log(playerObject)
         RenderJobs.players.push(playerObject);
+        console.log(RenderJobs.players)
     });
 });
 
 socket.on("player_update", (data) => {
+    console.log(data)
     worldData = data[0];
     let userAddress = data[1];
     delete data[0][userAddress];
+    console.log(userAddress)
     globalworldArray = Object.keys(worldData).map(elem => {
         let dict = {};
         dict[`${elem.toString()}`] = worldData[elem];
@@ -181,7 +188,6 @@ function animate() {
     });
     renderer.render(scene, threeCamera);
     frameUpdate+=1;
-    console.log(globalworldArray);
 }
 
 animate();
