@@ -77,53 +77,26 @@ let preset = {
 let globalworldArray = [];
 
 socket.on("player_connect", (predata) => {
-    console.log(predata);
-    globalworldArray = Object.keys(predata).map(elem => {
-        elem = {elem:predata[elem]};
-    });
-    console.log(globalworldArray);
-    globalworldArray.forEach(playerData => {
-        console.log(playerData)
-        if(!playerData)return;
-        let playerObject = new models.playerPreset(
-            Object.keys(playerData),
-            playerData[Object.keys(playerData)[0]].position,
-            playerData[Object.keys(playerData)[0]].rotation,
-            preset
-        );
-        console.log(playerObject)
-        RenderJobs.players.push(playerObject);
-        console.log(RenderJobs.players)
-    });
+    if(!(predata.data) == {}){
+        Object.keys(predata.data).forEach( elem => {
+            //render already existing players
+            console.log(elem);
+        });
+    }
+    //render user player
+    let playerObject = new models.playerPreset(
+        predata.address,
+        new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z),
+        new THREE.Vector3(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z),
+        preset
+    );
+    console.log(playerObject.toJSON());
+    socket.emit("player_connect_success", playerObject.toJSON())
+
 });
 
 socket.on("player_update", (data) => {
-    console.log(data)
-    worldData = data[0];
-    let userAddress = data[1];
-    delete data[0][userAddress];
-    console.log(userAddress)
-    globalworldArray = Object.keys(worldData).map(elem => {
-        let dict = {};
-        dict[`${elem.toString()}`] = worldData[elem];
-        return dict;
-    });
-    globalworldArray.forEach(playerData => {
-        let playerAddresses = RenderJobs.players.map(i => i.name);
-        let currentAddress = Object.keys(playerData)[0];
-        if(!(playerAddresses.includes(currentAddress))){
-            let playerObject = new models.playerPreset(
-                currentAddress,
-                playerData[Object.keys(playerData)[0]].position,
-                playerData[Object.keys(playerData)[0]].rotation,
-                preset
-            );
-            RenderJobs.players.push(playerObject);
-            scene.add(playerObject.mesh);
-        }else{
-            return;
-        }
-    });
+
 });
 
 let light_01 = new models.immovableLight(
@@ -182,9 +155,6 @@ function animate() {
     requestAnimationFrame(animate);
     RenderJobs.arr.forEach((elem)=>{
         try{elem.update(frameUpdate)}catch(e){/*pass*/}
-    });
-    RenderJobs.players.forEach((elem)=>{
-        elem.update(worldData, immovable_objectGroup.children);
     });
     renderer.render(scene, threeCamera);
     frameUpdate+=1;

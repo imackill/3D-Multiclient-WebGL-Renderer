@@ -40,5 +40,14 @@ export class playerPreset{
             this.mesh.geometry.computeBoundingBox();
             this.boundingbox.copy(this.mesh.geometry.boundingBox).applyMatrix4(this.mesh.matrixWorld);
         }
+        this.toJSON = () => {
+            let userData = {};
+            userData[this.name] = {
+                address:this.name,
+                position:this.position,
+                rotation:this.rotation,
+            };
+            return JSON.stringify(userData);
+        }
     }
 }
