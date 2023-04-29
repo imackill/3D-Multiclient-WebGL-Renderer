@@ -32,6 +32,7 @@ export class immovableCube{
             cube.rotation.y = this.rotation.y;
             cube.rotation.z = this.rotation.z;
             this.groupObject = cube;
+            this.cube.name = this.name;
             this.group.add(cube);
             document.dispatchEvent(cubeEvent);
             setInterval(()=>this.lifespan+=1,1000);

@@ -26,19 +26,11 @@ export class playerPreset{
             this.material = new this.material({color:this.color, wireframe:this.wireframe});
         }
         this.mesh = new THREE.Mesh(new this.geometry(this.size.box, this.size.box, this.size.box),this.material);
-        this.mesh.name = this.name;
         this.initElement = () => {
+            this.mesh.name = this.name;
             this.mesh.position.set(position.x,position.y,position.z);
             this.mesh.rotation.set(rotation.x,rotation.y,rotation.z);
-            this.id = this.mesh.id;
-        }
-        this.update = (worldData) => {
-            let objectData = worldData[this.name];
-            if(!objectData){return this.group.remove(this.mesh);}
-            this.mesh.position.set(objectData.position.x,objectData.position.y,objectData.position.z);
-            this.mesh.rotation.set(objectData.rotation._x,objectData.rotation._y,objectData.rotation._z);
-            this.mesh.geometry.computeBoundingBox();
-            this.boundingbox.copy(this.mesh.geometry.boundingBox).applyMatrix4(this.mesh.matrixWorld);
+            this.id = this.mesh.uuid;
         }
         this.toJSON = () => {
             let userData = {};
@@ -46,6 +38,7 @@ export class playerPreset{
                 address:this.name,
                 position:this.position,
                 rotation:this.rotation,
+                id:this.id,
             };
             return JSON.stringify(userData);
         }

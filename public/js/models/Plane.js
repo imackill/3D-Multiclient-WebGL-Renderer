@@ -23,6 +23,7 @@ export class Plane {
             this.mesh = new THREE.Mesh(this.geo,new this.material(material_args));
             this.mesh.position.set(this.position.x,this.position.y,this.position.z);
             this.mesh.rotation.set(this.rotation.x,this.rotation.y,this.rotation.z);
+            this.mesh.name = this.name;
             group.add(this.mesh);
         }
         this.update = () => {

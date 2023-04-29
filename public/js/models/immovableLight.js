@@ -50,7 +50,9 @@ export class immovableLight{
                     light = new this.type(this.color,this.intensity);
                     break;
             }
-            light.position.set(this.pos.x,this.pos.y,this.pos.z);
+            this.mesh = light;
+            this.mesh.position.set(this.pos.x,this.pos.y,this.pos.z);
+            this.mesh.name = this.objName;
             this.group.add(light)
         }
     }

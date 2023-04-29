@@ -41,6 +41,7 @@ export class immovablePolyhedron {
                 let polymesh = new THREE.Mesh(this.geometry, this.mat);
                 polymesh.position.set(this.position.x,this.position.y,this.position.z);
                 this.mesh = polymesh;
+                this.mesh.name = this.name;
                 this.group.add(polymesh);
                 this.oninit();
             }catch(e){

@@ -1,12 +1,23 @@
+/*
+
+            TO DO
+        -Make player_update event broadcast to all sockets and work properly
+
+*/
+
 import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 
-let socket = io();
-let worldData = {};
-let frameUpdate = 0;
+const wsc = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`); //main page is wss
 
-//Create test scene
+let wsc_data = undefined;
+
+wsc.onmessage = (event) => {
+    wsc_data = JSON.parse(event.data);
+}
+
+//Create scene
 const scene = new THREE.Scene();
 
 let threeCamera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -51,9 +62,10 @@ document.addEventListener('keydown', e => keyPressed[e.key] = true);
 document.addEventListener('keyup', e => keyPressed[e.key] = false);
 document.addEventListener('resize', () => renderer.setSize(innerWidth, innerHeight));
 
-const RenderJobs = {groups:[], players:[],arr:[]};
+const RenderJobs = {groups:[], players:{},arr:[]};
 
 const immovable_objectGroup = new THREE.Group();
+immovable_objectGroup.name = "landscapegroup";
 
 //player preset (temp)
 let preset = {
@@ -74,30 +86,6 @@ let preset = {
     group:scene,
 }
 
-let globalworldArray = [];
-
-socket.on("player_connect", (predata) => {
-    if(!(predata.data) == {}){
-        Object.keys(predata.data).forEach( elem => {
-            //render already existing players
-            console.log(elem);
-        });
-    }
-    //render user player
-    let playerObject = new models.playerPreset(
-        predata.address,
-        new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z),
-        new THREE.Vector3(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z),
-        preset
-    );
-    console.log(playerObject.toJSON());
-    socket.emit("player_connect_success", playerObject.toJSON())
-
-});
-
-socket.on("player_update", (data) => {
-
-});
 
 let light_01 = new models.immovableLight(
     "ambient light",
@@ -127,21 +115,40 @@ let plane_01 = new models.Plane(
     () => {}
 )
 
-RenderJobs.arr.push(
+RenderJobs.camera =
     {
         update: () => {
         threeCamera.position.x = position.x;
         threeCamera.position.y = position.y;
         threeCamera.position.z = position.z;
-        socket.emit("camera move", {position:threeCamera.position,rotation:threeCamera.rotation});
+        let cameraData = {
+            position: new THREE.Vector3(threeCamera.position.x,threeCamera.position.y,threeCamera.position.z),
+            rotation: new THREE.Quaternion(threeCamera.rotation._x,threeCamera.rotation._y,threeCamera.rotation._z,threeCamera.rotation._w)
+        };
+        if(!(wsc_data == undefined)){
+            let world_req = {
+                type:"PlayerUpdateRequest",
+                code:null,
+                text:"Update player position in global scene",
+                data: {
+                    client:wsc_data.client,
+                    orientation: cameraData,
+                },
+            }
+            wsc.send(JSON.stringify(world_req));
+        }
     },
         initElement: () => {
             console.log(`Initialized Camera`);
         }
     },
+RenderJobs.arr.push(
     plane_01,
     light_01
 );
+
+RenderJobs.camera.initElement();
+
 RenderJobs.groups.push(immovable_objectGroup);
 
 RenderJobs.arr.forEach(elem => elem.initElement());
@@ -153,11 +160,8 @@ RenderJobs.groups.forEach(elem => {
 //final animation and rendering
 function animate() {
     requestAnimationFrame(animate);
-    RenderJobs.arr.forEach((elem)=>{
-        try{elem.update(frameUpdate)}catch(e){/*pass*/}
-    });
+    RenderJobs.camera.update();
     renderer.render(scene, threeCamera);
-    frameUpdate+=1;
 }
 
 animate();
