@@ -1,10 +1,7 @@
 /*
-
-            TO DO
-        -Make player_update event broadcast to all sockets and work properly
-
+                                        TO DO
+        -Overhaul playerpreset system and player objects (maybe random shape)
 */
-
 import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
@@ -12,10 +9,6 @@ import { PointerLockControls } from 'PointerLockControls';
 const wsc = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`); //main page is wss
 
 let wsc_data = undefined;
-
-wsc.onmessage = (event) => {
-    wsc_data = JSON.parse(event.data);
-}
 
 //Create scene
 const scene = new THREE.Scene();
@@ -62,12 +55,12 @@ document.addEventListener('keydown', e => keyPressed[e.key] = true);
 document.addEventListener('keyup', e => keyPressed[e.key] = false);
 document.addEventListener('resize', () => renderer.setSize(innerWidth, innerHeight));
 
-const RenderJobs = {groups:[], players:{},arr:[]};
+const RenderJobs = {groups:[], players:[],arr:[]};
 
 const immovable_objectGroup = new THREE.Group();
 immovable_objectGroup.name = "landscapegroup";
 
-//player preset (temp)
+//player preset (temp) WILL CHANGE
 let preset = {
     geometry:THREE.BoxGeometry,
     material:THREE.MeshStandardMaterial,
@@ -83,7 +76,7 @@ let preset = {
     wireframe:true,
     size:{box:4},
     extra:{},
-    group:scene,
+    scene:scene,
 }
 
 
@@ -156,6 +149,43 @@ RenderJobs.arr.forEach(elem => elem.initElement());
 RenderJobs.groups.forEach(elem => {
     scene.add(elem);
 });
+
+//rendering player objects
+wsc.onmessage = (message) => {
+    const data = JSON.parse(message.data);
+    switch (data.type) {
+        case "ConnectionResponse":
+            wsc_data = data;
+            break;
+
+        case "DataResponse":
+            let clientid = data.data.client.id;
+            let globalSceneArray = data.data.global_arr;//consider changing- no more data.data
+            let renderSceneArray = globalSceneArray;
+            renderSceneArray.forEach(player => {
+                let pos = player.position;
+                let rot = player.rotation;
+                if(scene.children.map(object => object.name).includes(player.id)){
+                    scene.getObjectByName(player.id).position.set(pos.x,pos.y,pos.z);
+                    scene.getObjectByName(player.id).rotation.set(rot._x,rot._y,rot._z);
+                }else{
+                    let playerObject = new models.playerPreset(
+                        player.id,
+                        pos,
+                        rot,
+                        preset
+                    );
+                    playerObject.initElement();
+                    RenderJobs.players.push(playerObject);
+                }
+            });
+            break;
+    
+        default:
+            break;
+    }
+
+}
 
 //final animation and rendering
 function animate() {

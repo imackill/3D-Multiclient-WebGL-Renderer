@@ -16,7 +16,7 @@ export class playerPreset{
         this.wireframe = json.wireframe;
         this.size = json.size;
         this.extra = json.extra;
-        this.group = json.group;
+        this.scene = json.scene;
         this.position = new THREE.Vector3(position.x,position.y,position.z);
         this.rotation = new THREE.Quaternion(rotation.x,rotation.y,rotation.z,rotation.w);
         this.boundingbox = new THREE.Box3();
@@ -30,7 +30,11 @@ export class playerPreset{
             this.mesh.name = this.name;
             this.mesh.position.set(position.x,position.y,position.z);
             this.mesh.rotation.set(rotation.x,rotation.y,rotation.z);
-            this.id = this.mesh.uuid;
+            this.scene.add(this.mesh);
+        }
+        this.update = () => {
+            this.scene.getObjectByName(this.name).position.set(this.position.x,this.position.y,this.position.z);
+            this.scene.getObjectByName(this.name).rotation.set(this.rotation._x,this.rotation._y,this.rotation._z);
         }
         this.toJSON = () => {
             let userData = {};
@@ -38,7 +42,6 @@ export class playerPreset{
                 address:this.name,
                 position:this.position,
                 rotation:this.rotation,
-                id:this.id,
             };
             return JSON.stringify(userData);
         }

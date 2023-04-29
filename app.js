@@ -70,10 +70,22 @@ wss.on('connection', (ws,req) => {
         if(currentObjectIDs.indexOf(playerUpdateData.id) == -1){
             currentObjectArray.push(playerUpdateData);
         }else{
-            currentObjectArray.splice([currentObjectIDs.indexOf(playerUpdateData)], 1, playerUpdateData);
+            currentObjectArray.splice(currentObjectIDs.indexOf(playerUpdateData.id), 1, playerUpdateData);
         }
         userposJSONData.objects = currentObjectArray;
         fs.writeFileSync(`data/userpos.json`, JSON.stringify(userposJSONData));
+
+        //send response
+        let data_response = {
+            type:"DataResponse",
+            code:200,
+            text:"OK",
+            data:{
+                global_arr:currentObjectArray,
+                client:wsc_req.data.client
+            }
+        }
+        ws.send(JSON.stringify(data_response));
     });
 
     ws.on('close', (event) => {
