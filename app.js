@@ -11,12 +11,7 @@ dotenv.config();
 const PORT = parseInt(process.env.PORT);
 
 const app = express();
-const server = https.createServer(
-    {
-    key:fs.readFileSync(`key.pem`),
-    cert:fs.readFileSync(`cert.pem`)
-    }
-,app);
+const server = https.createServer(app);
 
 if(!fs.existsSync(`data`)){
     fs.mkdirSync(`data`);
