@@ -1,6 +1,6 @@
 const express = require('express');
 const favicon = require('serve-favicon');
-const https = require('https');
+const http = require('http');
 const fs = require('fs');
 const ws = require('ws');
 const dotenv = require('dotenv');
@@ -11,7 +11,12 @@ dotenv.config();
 const PORT = parseInt(process.env.PORT);
 
 const app = express();
-const server = https.createServer(app);
+const server = http.createServer(app);
+
+
+server.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}\nroot dir is ${__dirname}`);
+});
 
 if(!fs.existsSync(`data`)){
     fs.mkdirSync(`data`);
@@ -26,7 +31,7 @@ app.get("/", (req,res) =>{
     res.sendFile('/index.html', {root: __dirname});
 });
 
-const wss = new ws.WebSocketServer({server});
+const wss = new ws.Server({server});
 
 const userMap = new Map();
 
@@ -99,9 +104,4 @@ wss.on('connection', (ws,req) => {
         fs.writeFileSync(`data/userpos.json`, JSON.stringify(userposJSONData));
         console.log(`User ${ws._socket.remoteAddress} successfully disconnected with id ${ws.id}.`)
     });
-});
-
-
-server.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}\nroot dir is ${__dirname}`);
 });
