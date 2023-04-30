@@ -4,6 +4,3 @@ data/
 /.env
 /3d Web Renderer.code-workspace
 /.vscode
-cert.pem
-key.pem
-csr.pem
