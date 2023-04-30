@@ -6,7 +6,7 @@ import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 
-const wsc = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`); //main page is wss
+const wsc = new WebSocket(`wss://${window.location.hostname}:${window.location.port}`); //main page is wss
 
 let wsc_data = undefined;
 

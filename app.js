@@ -1,6 +1,6 @@
 const express = require('express');
 const favicon = require('serve-favicon');
-const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const ws = require('ws');
 const dotenv = require('dotenv');
@@ -11,7 +11,10 @@ dotenv.config();
 const PORT = parseInt(process.env.PORT);
 
 const app = express();
-const server = http.createServer(app);
+const server = https.createServer({
+    key:fs.readFileSync(`key.pem`),
+    cert:fs.readFileSync(`cert.pem`)
+},app);
 
 if(!fs.existsSync(`data`)){
     fs.mkdirSync(`data`);
