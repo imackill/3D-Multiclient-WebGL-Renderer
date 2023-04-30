@@ -180,6 +180,11 @@ wsc.onmessage = (message) => {
                 }
             });
             break;
+
+        case "DisconnectBroadcast":
+            clientDisconnect = data.data;
+            scene.getObjectByName(data.client.id).remove();
+            break;
     
         default:
             break;

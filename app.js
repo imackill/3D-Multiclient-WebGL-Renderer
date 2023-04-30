@@ -100,6 +100,21 @@ wss.on('connection', (ws,req) => {
         if(currentObjectIDs.indexOf(ws.id) != -1){
             currentObjectArray.splice(currentObjectIDs.indexOf(ws.id),1);
         }
+        let close_response = {
+            type:"DisconnectBroadcast",
+            code:null,
+            text:"User disconnected.",
+            data:{
+                client:{
+                    address:ws._socket.remoteAddress,
+                    id:ws.id
+                },
+                timestamp:Date.now().toLocaleString()
+            }
+        }
+        wss.clients.forEach(ws => {
+            ws.send(JSON.stringify(close_response));
+        });
         userposJSONData.objects = currentObjectArray;
         fs.writeFileSync(`data/userpos.json`, JSON.stringify(userposJSONData));
         console.log(`User ${ws._socket.remoteAddress} successfully disconnected with id ${ws.id}.`)
