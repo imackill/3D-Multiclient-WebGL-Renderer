@@ -72,7 +72,7 @@ let preset = {
     },
     position: new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z,),
     rotation: new THREE.Quaternion(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z,),
-    color:0x000000,
+    color:null,
     wireframe:false,
     size:{box:4},
     extra:{},
