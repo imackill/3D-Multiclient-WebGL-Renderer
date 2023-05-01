@@ -63,7 +63,7 @@ immovable_objectGroup.name = "landscapegroup";
 //player preset (temp) WILL CHANGE
 let preset = {
     geometry:THREE.BoxGeometry,
-    material:THREE.MeshStandardMaterial,
+    material:THREE.MeshBasicMaterial,
     texture:{
         included:true,
         url:'https://i.pinimg.com/280x280_RS/3b/d9/40/3bd9409cd8cc9c46c67c28f0e8fc57a3.jpg',
