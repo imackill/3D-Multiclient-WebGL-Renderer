@@ -21,7 +21,14 @@ export class playerPreset{
         this.rotation = new THREE.Quaternion(rotation.x,rotation.y,rotation.z,rotation.w);
         this.boundingbox = new THREE.Box3();
         if(this.texture.incuded){
-            this.material = new TextureLoader({url: this.texture.url, material:this.material, wrapping:this.texture.wrapping, repeat:this.texture.repeat})
+            this.material = new TextureLoader(
+                {
+                    url: this.texture.url,
+                    material:this.material,
+                    wrapping:this.texture.wrapping,
+                    repeat:this.texture.repeat
+                }
+            );
         }else{
             this.material = new this.material({color:this.color, wireframe:this.wireframe});
         }
