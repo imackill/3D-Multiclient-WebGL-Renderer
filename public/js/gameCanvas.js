@@ -13,7 +13,7 @@ let wsc_data = undefined;
 //Create scene
 const scene = new THREE.Scene();
 
-let threeCamera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+let threeCamera = new THREE.PerspectiveCamera(83, window.innerWidth/window.innerHeight, 0.1, 1000);
 
 const renderer = new THREE.WebGLRenderer({alpha: true});
 renderer.setClearColor( 0xADD8E6, 1);
@@ -65,15 +65,15 @@ let preset = {
     geometry:THREE.BoxGeometry,
     material:THREE.MeshStandardMaterial,
     texture:{
-        included:false,
-        url:'',
-        wrapping:null,
+        included:true,
+        url:'https://i.pinimg.com/280x280_RS/3b/d9/40/3bd9409cd8cc9c46c67c28f0e8fc57a3.jpg',
+        wrapping:THREE.RepeatWrapping,
         repeat: new THREE.Vector2(0,0),
     },
     position: new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z,),
     rotation: new THREE.Quaternion(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z,),
     color:0x000000,
-    wireframe:true,
+    wireframe:false,
     size:{box:4},
     extra:{},
     scene:scene,
