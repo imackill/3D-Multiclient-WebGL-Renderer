@@ -179,6 +179,7 @@ wsc.onmessage = (message) => {
                     RenderJobs.players.push(playerObject);
                 }
             });
+            scene.getObjectByName(clientid).visible = false;
             break;
 
         case "DisconnectBroadcast":
