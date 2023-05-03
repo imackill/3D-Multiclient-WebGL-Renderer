@@ -27,7 +27,7 @@ renderer.domElement.addEventListener("click", () => {
 
 $("body").append(renderer.domElement);
 
-let speed = 0.2, maxSpeed = speed, friction = 0.91, 
+let speed = 0.2, maxSpeed = speed, friction = 0.91,
     position = { x: 0, y: 0, z: 0 },
     velocity = { x: 0, y: 0, z: 0 },
     keyPressed = {};
@@ -43,8 +43,8 @@ let update = () => {
     velocity.x *= friction;
     velocity.y *= friction;
     position.z += velocity.z * Math.cos(threeCamera.rotation.x);
-    position.x += velocity.z * Math.sin(threeCamera.rotation.y); 
-    position.z -= velocity.x * Math.sin(threeCamera.rotation.y); 
+    position.x += velocity.z * Math.sin(threeCamera.rotation.y);
+    position.z -= velocity.x * Math.sin(threeCamera.rotation.y);
     position.x += velocity.x * Math.cos(threeCamera.rotation.x);
     position.y += velocity.y;
 };
@@ -66,7 +66,7 @@ let preset = {
     material:THREE.MeshBasicMaterial,
     texture:{
         included:true,
-        url:'https://i.pinimg.com/280x280_RS/3b/d9/40/3bd9409cd8cc9c46c67c28f0e8fc57a3.jpg',
+        url:'public/assets/textures/pngwing.com.png',
         wrapping:THREE.RepeatWrapping,
         repeat: new THREE.Vector2(0,0),
     },
@@ -186,7 +186,7 @@ wsc.onmessage = (message) => {
             clientDisconnect = data.data;
             scene.getObjectByName(data.client.id).remove();
             break;
-    
+
         default:
             break;
     }
