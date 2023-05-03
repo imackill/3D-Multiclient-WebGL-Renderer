@@ -30,6 +30,7 @@ export class playerPreset{
                 }
             );
             this.material.crossOrigin = "";
+            this.material.loader.load(`${this.material.url}`);
         }else{
             this.material = new this.material({color:this.color, wireframe:this.wireframe});
         }
