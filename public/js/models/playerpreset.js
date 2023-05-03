@@ -29,6 +29,7 @@ export class playerPreset{
                     repeat:this.texture.repeat
                 }
             );
+            this.material.crossOrigin = "";
         }else{
             this.material = new this.material({color:this.color, wireframe:this.wireframe});
         }
