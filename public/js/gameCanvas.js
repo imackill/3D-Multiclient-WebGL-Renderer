@@ -68,7 +68,7 @@ let preset = {
         included:true,
         url:'public/assets/textures/pngwing.com.png',
         wrapping:THREE.RepeatWrapping,
-        repeat: new THREE.Vector2(0,0),
+        repeat: new THREE.Vector2(1,1),
     },
     position: new THREE.Vector3(threeCamera.position.x, threeCamera.position.y, threeCamera.position.z,),
     rotation: new THREE.Quaternion(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z,),
