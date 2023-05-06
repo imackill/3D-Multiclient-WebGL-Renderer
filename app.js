@@ -5,7 +5,7 @@ const fs = require('fs');
 const ws = require('ws');
 const dotenv = require('dotenv');
 const uuid = require('node-uuid');
-import { pnoiseGenerator } from './scripts/noiseGenerator';
+const pnoiseGenerator = require('./scripts/noiseGenerator');
 
 dotenv.config();
 
