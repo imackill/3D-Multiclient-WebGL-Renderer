@@ -1,4 +1,4 @@
-export class pnoiseGenerator {
+class pnoiseGenerator {
     constructor(
         xValue=int,
         yValue=int,
