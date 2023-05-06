@@ -39,7 +39,7 @@ let minHeight = 1;
 let xSize = 1000;
 let ySize = 1000;
 let worldJSON = JSON.parse(fs.readFileSync(`data/world.json`));
-let pWorldGenerator = new pnoiseGenerator(
+let pWorldGenerator = new pnoiseGenerator.pnoiseGenerator(
     xSize,
     ySize,
     {
