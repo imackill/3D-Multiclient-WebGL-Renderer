@@ -1,6 +1,5 @@
 /package-lock.json
 node_modules/
-data/
 /.env
 /3d Web Renderer.code-workspace
 /.vscode

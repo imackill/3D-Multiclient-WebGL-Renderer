@@ -5,6 +5,7 @@ const fs = require('fs');
 const ws = require('ws');
 const dotenv = require('dotenv');
 const uuid = require('node-uuid');
+import { pnoiseGenerator } from './scripts/noiseGenerator';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ server.listen(PORT, () => {
 if(!fs.existsSync(`data`)){
     fs.mkdirSync(`data`);
     fs.writeFileSync(`data/userpos.json`, JSON.stringify({"objects":[]}));
+    fs.writeFileSync(`data/world.json`, JSON.stringify({}));
 }
 
 app.use(favicon(`${__dirname}/public/assets/favicon.ico`));
@@ -30,6 +32,28 @@ app.use(express.static(`${__dirname}`));
 app.get("/", (req,res) =>{
     res.sendFile('/index.html', {root: __dirname});
 });
+
+//generate world info (happens on every restart)
+let maxHeight = 100;
+let minHeight = 1;
+let xSize = 1000;
+let ySize = 1000;
+let worldJSON = JSON.parse(fs.readFileSync(`data/world.json`));
+let pWorldGenerator = new pnoiseGenerator(
+    xSize,
+    ySize,
+    {
+        heightMax:maxHeight,
+        heightMin:minHeight,
+    }
+);
+let WorldTerrainMap = pWorldGenerator.createPerlinNoiseMap();
+worldJSON["terrainMap"] = WorldTerrainMap;
+worldJSON["maxHeight"] = WorldTerrainMap;
+worldJSON["minHeight"] = WorldTerrainMap;
+worldJSON["xSize"] = xSize;
+worldJSON["ySize"] = ySize;
+fs.writeFileSync(`data/world.json`, JSON.stringify(worldJSON));
 
 const wss = new ws.Server({server});
 
@@ -79,7 +103,7 @@ wss.on('connection', (ws,req) => {
         }
         userposJSONData.objects = currentObjectArray;
         fs.writeFileSync(`data/userpos.json`, JSON.stringify(userposJSONData));
-
+        let worldData = JSON.parse(fs.readFileSync(`data/world.json`));
         //send response
         let data_response = {
             type:"DataResponse",
@@ -87,6 +111,7 @@ wss.on('connection', (ws,req) => {
             text:"OK",
             data:{
                 global_arr:currentObjectArray,
+                world: worldData,
                 client:wsc_req.data.client
             }
         }

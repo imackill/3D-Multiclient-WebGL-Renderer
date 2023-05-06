@@ -1,7 +1,3 @@
-/*
-                                        TO DO
-        -Overhaul playerpreset system and player objects (maybe random shape)
-*/
 import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
@@ -162,6 +158,8 @@ wsc.onmessage = (message) => {
             let clientid = data.data.client.id;
             let globalSceneArray = data.data.global_arr;//consider changing- no more data.data
             let renderSceneArray = globalSceneArray;
+            let worldData = data.data.world;
+            console.log(worldData);
             renderSceneArray.forEach(player => {
                 let pos = player.position;
                 let rot = player.rotation;
