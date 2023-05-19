@@ -159,7 +159,7 @@ wsc.onmessage = (message) => {
             let globalSceneArray = data.data.global_arr;//consider changing- no more data.data
             let renderSceneArray = globalSceneArray;
             let worldData = data.data.world;
-            console.log(worldData);
+            console.log("World Data:",worldData);
             renderSceneArray.forEach(player => {
                 let pos = player.position;
                 let rot = player.rotation;
