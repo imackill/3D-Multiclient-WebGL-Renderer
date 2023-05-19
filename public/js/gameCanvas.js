@@ -10,7 +10,7 @@ let wsc_data = undefined;
 const scene = new THREE.Scene();
 
 let threeCamera = new THREE.PerspectiveCamera(83, window.innerWidth/window.innerHeight, 0.1, 1000);
-threeCamera.position.x = 10;
+threeCamera.position.y = 10;
 
 const renderer = new THREE.WebGLRenderer({alpha: true});
 renderer.setClearColor( 0xADD8E6, 1);
