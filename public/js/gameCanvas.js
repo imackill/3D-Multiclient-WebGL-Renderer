@@ -10,6 +10,7 @@ let wsc_data = undefined;
 const scene = new THREE.Scene();
 
 let threeCamera = new THREE.PerspectiveCamera(83, window.innerWidth/window.innerHeight, 0.1, 1000);
+threeCamera.position.x = 10;
 
 const renderer = new THREE.WebGLRenderer({alpha: true});
 renderer.setClearColor( 0xADD8E6, 1);
@@ -85,24 +86,6 @@ let light_01 = new models.immovableLight(
     scene
 );
 
-let plane_01 = new models.Plane(
-    "plane test",
-    {width:100,height:100,wSegments:10,hSegments:10},
-    models.TextureLoader,
-    {
-        url:'public/assets/textures/floortexture.jpeg',
-        material: THREE.MeshBasicMaterial,
-        wrapping: THREE.RepeatWrapping,
-        repeat: new THREE.Vector2(10,10),
-    },
-    new THREE.Vector3(0,-6,-5),
-    new THREE.Quaternion((3*Math.PI)/2,0,0,0),
-    immovable_objectGroup,
-    () => {
-        console.log(`Initialized "${plane_01.name}"`);
-    },
-    () => {}
-)
 
 RenderJobs.camera =
     {
@@ -132,7 +115,6 @@ RenderJobs.camera =
         }
     },
 RenderJobs.arr.push(
-    plane_01,
     light_01
 );
 
@@ -190,6 +172,9 @@ wsc.onmessage = (message) => {
     }
 
 }
+//for debugging
+const axesHelper = new THREE.AxesHelper( 5 );
+scene.add( axesHelper );
 
 //final animation and rendering
 function animate() {

@@ -50,8 +50,8 @@ let pWorldGenerator = new pnoiseGenerator(
 );
 let WorldTerrainMap = pWorldGenerator.createPerlinNoiseMap();
 worldJSON["terrainMap"] = WorldTerrainMap;
-worldJSON["maxHeight"] = WorldTerrainMap;
-worldJSON["minHeight"] = WorldTerrainMap;
+worldJSON["maxHeight"] = maxHeight;
+worldJSON["minHeight"] = minHeight;
 worldJSON["xSize"] = xSize;
 worldJSON["ySize"] = ySize;
 fs.writeFileSync(`data/world.json`, JSON.stringify(worldJSON));
