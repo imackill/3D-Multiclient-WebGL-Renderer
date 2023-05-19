@@ -180,3 +180,4 @@ class pnoiseGenerator {
         return PerlinNoiseArray;
     }
 }
+module.exports = pnoiseGenerator;

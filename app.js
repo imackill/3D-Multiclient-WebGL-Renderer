@@ -5,7 +5,8 @@ const fs = require('fs');
 const ws = require('ws');
 const dotenv = require('dotenv');
 const uuid = require('node-uuid');
-const pnoiseGenerator = require('./scripts/noiseGenerator');
+const pnoiseGenerator = require('./scripts/noiseGenerator.js');
+
 
 dotenv.config();
 
@@ -39,7 +40,7 @@ let minHeight = 1;
 let xSize = 1000;
 let ySize = 1000;
 let worldJSON = JSON.parse(fs.readFileSync(`data/world.json`));
-let pWorldGenerator = new pnoiseGenerator.pnoiseGenerator(
+let pWorldGenerator = new pnoiseGenerator(
     xSize,
     ySize,
     {
