@@ -1,7 +1,7 @@
 export class immovableCube{
     constructor(objName,
     pos=new THREE.Vector3(0,0,0),
-    edgeLength,
+    size,
     geometry,
     material,
     meshType,
@@ -12,7 +12,7 @@ export class immovableCube{
         this.lifespan = 0;
         this.name = objName;
         this.pos = pos;
-        this.edgeLength = edgeLength;
+        this.size = size;
         this.geometry = geometry;
         this.material = material;
         this.meshType = meshType;
@@ -22,7 +22,7 @@ export class immovableCube{
         this.rotation = rotation;
         let cubeEvent = new CustomEvent("oncubeinit", {"detail":"when a new cube object is initialized"})
         this.initElement = () => {
-            let geo = new this.geometry(this.edgeLength,this.edgeLength,this.edgeLength);
+            let geo = new this.geometry(this.size.x,this.size.y,this.size.z);
             let mat = new this.material(this.materialOptions);
             let cube =  new this.meshType(geo, mat);
             cube.position.x=this.pos.x

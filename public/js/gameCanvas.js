@@ -71,7 +71,9 @@ let preset = {
     rotation: new THREE.Quaternion(threeCamera.rotation.x, threeCamera.rotation.y, threeCamera.rotation.z,),
     color:null,
     wireframe:false,
-    size:{box:4},
+    size:{
+        box:4
+    },
     extra:{},
     scene:scene,
 }
@@ -142,6 +144,17 @@ wsc.onmessage = (message) => {
             let renderSceneArray = globalSceneArray;
             let worldData = data.data.world;
             console.log("World Data:",worldData);
+            let PBitMap = worldData.terrainMap;
+            if(!scene.getObjectByName("Terrain")){
+                let PBitTerrainGroup = new THREE.Group();
+                let rowcount = 0;
+                PBitMap.forEach(row => {
+                    row.forEach(cell => {
+                        let cellBox = new models.immovableCube(``);
+                    });
+                    rowcount++;
+                });
+            }
             renderSceneArray.forEach(player => {
                 let pos = player.position;
                 let rot = player.rotation;
@@ -164,6 +177,7 @@ wsc.onmessage = (message) => {
 
         case "DisconnectBroadcast":
             let clientDisconnect = data.data;
+            console.log(data);
             scene.getObjectByName(data.client.id).remove();
             break;
 
