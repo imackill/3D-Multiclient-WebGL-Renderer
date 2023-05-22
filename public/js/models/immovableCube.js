@@ -15,6 +15,7 @@ export class immovableCube{
     }
     ){
         this.lifespan = 0;
+        this.options = options;
         this.name = objName;
         this.pos = pos;
         this.size = size;
