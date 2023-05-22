@@ -144,8 +144,8 @@ wsc.onmessage = (message) => {
             let renderSceneArray = globalSceneArray;
             let worldData = data.data.world;
             let PBitMap = worldData.terrainMap;
+            let PBitTerrainGroup = new THREE.Group();
             if(!scene.getObjectByName("Terrain")){
-                let PBitTerrainGroup = new THREE.Group();
                 PBitTerrainGroup.name = "Terrain";
                 let rowcount = 0;
                 let columncount = 0;
