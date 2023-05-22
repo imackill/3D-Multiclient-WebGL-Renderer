@@ -43,8 +43,16 @@ export class immovableCube{
             if(this.options.edges == true){
                 let edges = new THREE.EdgesGeometry( geo );
                 this.edgeObj = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: this.options.edgesColor } ) );
-                this.edgeObj.position = this.cube.position;
-                this.edgeObj.rotation = this.cube.rotation;
+                this.edgeObj.position.set(
+                    this.cube.position.x,
+                    this.cube.position.y,
+                    this.cube.position.z,
+                );
+                this.edgeObj.rotation.set(
+                    this.cube.rotation.x,
+                    this.cube.rotation.y,
+                    this.cube.rotation.z,
+                );
                 this.group.add(this.edgeObj);
             }
             document.dispatchEvent(cubeEvent);

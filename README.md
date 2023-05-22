@@ -3,4 +3,4 @@
 <br>
 <a>Check it out <a href="https://erasmusss-multiclient-webgl-renderer.onrender.com">here.</a>
 <br>
-<footer>Just a note: Render requires a GIT commit to run the release.</footer>
+<small>Just a note: Render requires a GIT commit to run the release.</small>
