@@ -179,7 +179,7 @@ wsc.onmessage = (message) => {
             let clientDisconnect = data.data.client;
             let clientObject = scene.getObjectByName(clientDisconnect.id);
             console.log(clientObject);
-            clientObject.remove();
+            clientObject.removeFromParent();
             break;
 
         default:
@@ -187,9 +187,6 @@ wsc.onmessage = (message) => {
     }
 
 }
-//for debugging
-const axesHelper = new THREE.AxesHelper( 5 );
-scene.add( axesHelper );
 
 //final animation and rendering
 function animate() {
