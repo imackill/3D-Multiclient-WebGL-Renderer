@@ -152,6 +152,7 @@ wsc.onmessage = (message) => {
                 PBitMap.forEach(row => {
                     row.forEach(cell => {
                         let cellpos = new THREE.Vector3(0, rowcount, columncount);
+                        console.log(cellpos);
                         let cellBox = new models.immovableCube(
                             `World-Column-(${cell},${row})`,
                             cellpos,
