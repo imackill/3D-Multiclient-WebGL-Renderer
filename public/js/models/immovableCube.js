@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 export class immovableCube{
     constructor(objName,
     pos=new THREE.Vector3(0,0,0),
