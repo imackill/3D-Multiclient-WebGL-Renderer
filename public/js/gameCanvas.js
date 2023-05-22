@@ -151,14 +151,14 @@ wsc.onmessage = (message) => {
                 let columncount = 0;
                 PBitMap.forEach(row => {
                     row.forEach(cell => {
-                        let cellpos = new THREE.Vector3(columncount, 0, rowcount);
+                        let cellpos = new THREE.Vector3(columncount, rowcount, 0);
                         let cellBox = new models.immovableCube(
                             `World-Column-(${cell},${row})`,
                             cellpos,
                             {
-                                x:1,
+                                x:cell,
                                 y:1,
-                                cell
+                                z:1,
                             },
                             THREE.BoxGeometry,
                             THREE.MeshStandardMaterial,
