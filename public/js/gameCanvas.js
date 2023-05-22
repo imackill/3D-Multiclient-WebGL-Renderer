@@ -171,11 +171,13 @@ wsc.onmessage = (message) => {
                             new THREE.Quaternion(0,0,0,'_XYZ')
 
                         );
+                        cellBox.initElement();
                         columncount++
                     });
                     rowcount++;
                 });
             }
+            scene.add(PBitTerrainGroup);
             renderSceneArray.forEach(player => {
                 let pos = player.position;
                 let rot = player.rotation;
