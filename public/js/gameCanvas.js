@@ -146,16 +146,31 @@ wsc.onmessage = (message) => {
             let PBitMap = worldData.terrainMap;
             if(!scene.getObjectByName("Terrain")){
                 let PBitTerrainGroup = new THREE.Group();
+                PBitTerrainGroup.name = "Terrain";
                 let rowcount = 0;
                 let columncount = 0;
                 PBitMap.forEach(row => {
                     row.forEach(cell => {
-                        console.log(cell,row,columncount,(cell==row[columncount]));
-                        let cellpos = new THREE.Vector3(cell, columncount, row);
-                        /*let cellBox = new models.immovableCube(
+                        let cellpos = new THREE.Vector3(0, columncount, rowcount);
+                        let cellBox = new models.immovableCube(
                             `World-Column-(${cell},${row})`,
                             cellpos,
-                        );*/
+                            {
+                                x:1,
+                                y:1,
+                                cell
+                            },
+                            THREE.BoxGeometry(),
+                            THREE.MeshStandardMaterial,
+                            THREE.Mesh(),
+                            {
+                                color:0x00ff00,
+                                wireframe:false
+                            },
+                            PBitTerrainGroup,
+                            new THREE.Quaternion(0,0,0,'_XYZ')
+
+                        );
                         columncount++
                     });
                     rowcount++;
