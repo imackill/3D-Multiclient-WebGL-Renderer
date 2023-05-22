@@ -6,7 +6,10 @@ export class immovableCube{
     geometry,
     material,
     meshType,
-    materialOptions,
+    materialOptions={
+        edges:false,
+        edgesColor:0x000000,
+    },
     group,
     rotation
     ){
@@ -25,9 +28,6 @@ export class immovableCube{
         this.initElement = () => {
             let geo = new this.geometry(this.size.x,this.size.y,this.size.z);
             let mat = new this.material(this.materialOptions);
-            if(this.materialOptions.edges == true){
-                //add edges
-            }
             this.cube =  new this.meshType(geo, mat);
             this.cube.position.x=this.pos.x
             this.cube.position.y=this.pos.y
@@ -38,6 +38,12 @@ export class immovableCube{
             this.groupObject = this.cube;
             this.cube.name = this.name;
             this.group.add(this.groupObject);
+            if(this.materialOptions.edges == true){
+                this.edgesgeo = new THREE.EdgesGeometry(this.cube);
+                this.edgesmat = new THREE.LineBasicMaterial({color:this.materialOptions.edgesColor, linewidth:2});
+                this.edgesObj = new THREE.LineSegments(this.edgesgeo, this.edgesmat);
+                this.group.add(this.edgeObj);
+            }
             document.dispatchEvent(cubeEvent);
             setInterval(()=>this.lifespan+=1,1000);
         };
