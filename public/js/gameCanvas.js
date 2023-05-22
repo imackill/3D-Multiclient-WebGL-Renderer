@@ -147,13 +147,16 @@ wsc.onmessage = (message) => {
             if(!scene.getObjectByName("Terrain")){
                 let PBitTerrainGroup = new THREE.Group();
                 let rowcount = 0;
+                let columncount = 0;
                 PBitMap.forEach(row => {
                     row.forEach(cell => {
-                        console.log(cell,row);
-                        //let cellpos = new THREE.Vector3() XYZ is weird—FIX
-                        let cellBox = new models.immovableCube(
+                        console.log(cell,row,columncount,(cell==row[columncount]));
+                        let cellpos = new THREE.Vector3(cell, columncount, row);
+                        /*let cellBox = new models.immovableCube(
                             `World-Column-(${cell},${row})`,
-                        );
+                            cellpos,
+                        );*/
+                        columncount++
                     });
                     rowcount++;
                 });
