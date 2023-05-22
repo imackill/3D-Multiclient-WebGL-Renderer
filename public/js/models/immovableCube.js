@@ -21,10 +21,13 @@ export class immovableCube{
         this.group = group;
         this.groupObject;
         this.rotation = rotation;
-        let cubeEvent = new CustomEvent("oncubeinit", {"detail":"when a new cube object is initialized"})
+        let cubeEvent = new CustomEvent("oncubeinit", {"detail":"when a new cube object is initialized"});
         this.initElement = () => {
             let geo = new this.geometry(this.size.x,this.size.y,this.size.z);
             let mat = new this.material(this.materialOptions);
+            if(this.materialOptions.edges == true){
+                //add edges
+            }
             this.cube =  new this.meshType(geo, mat);
             this.cube.position.x=this.pos.x
             this.cube.position.y=this.pos.y

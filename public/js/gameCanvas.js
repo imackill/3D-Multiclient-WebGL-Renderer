@@ -146,6 +146,7 @@ wsc.onmessage = (message) => {
             let PBitMap = worldData.terrainMap;
             let PBitTerrainGroup = new THREE.Group();
             if(!scene.getObjectByName("Terrain")){
+                const BLOCKSIZE = data.data.BLOCKSIZE;
                 PBitTerrainGroup.name = "Terrain";
                 let rowcount = 0;
                 let columncount = 0;
@@ -156,9 +157,9 @@ wsc.onmessage = (message) => {
                             `World-Column-(${cell},${row})`,
                             cellpos,
                             {
-                                x:1,
+                                x:BLOCKSIZE,
                                 y:cell,
-                                z:1,
+                                z:BLOCKSIZE,
                             },
                             THREE.BoxGeometry,
                             THREE.MeshStandardMaterial,
@@ -172,9 +173,9 @@ wsc.onmessage = (message) => {
 
                         );
                         cellBox.initElement();
-                        columncount++
+                        columncount+=BLOCKSIZE
                     });
-                    rowcount++;
+                    rowcount+=BLOCKSIZE;
                     columncount = 0;
                 });
             }
