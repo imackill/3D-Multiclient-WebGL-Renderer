@@ -41,9 +41,19 @@ export class immovableCube{
             this.cube.name = this.name;
             this.group.add(this.groupObject);
             if(this.options.edges == true){
-                this.edgesgeo = new THREE.EdgesGeometry(this.cube);
+                this.edgesgeo = new THREE.EdgesGeometry(geo);
                 this.edgesmat = new THREE.LineBasicMaterial({color:this.options.edgesColor, linewidth:2});
                 this.edgesObj = new THREE.LineSegments(this.edgesgeo, this.edgesmat);
+                this.edgesObj.position.set(
+                    this.cube.position.x,
+                    this.cube.position.y,
+                    this.cube.position.z,
+                );
+                this.edgesObj.rotation.set(
+                    this.cube.rotation.x,
+                    this.cube.rotation.y,
+                    this.cube.rotation.z,
+                );
                 this.group.add(this.edgeObj);
             }
             document.dispatchEvent(cubeEvent);
