@@ -143,14 +143,17 @@ wsc.onmessage = (message) => {
             let globalSceneArray = data.data.global_arr;//consider changing- no more data.data
             let renderSceneArray = globalSceneArray;
             let worldData = data.data.world;
-            console.log("World Data:",worldData);
             let PBitMap = worldData.terrainMap;
             if(!scene.getObjectByName("Terrain")){
                 let PBitTerrainGroup = new THREE.Group();
                 let rowcount = 0;
                 PBitMap.forEach(row => {
                     row.forEach(cell => {
-                        let cellBox = new models.immovableCube(``);
+                        console.log(cell,row);
+                        //let cellpos = new THREE.Vector3() XYZ is weird—FIX
+                        let cellBox = new models.immovableCube(
+                            `World-Column-(${cell},${row})`,
+                        );
                     });
                     rowcount++;
                 });
@@ -178,7 +181,6 @@ wsc.onmessage = (message) => {
         case "DisconnectBroadcast":
             let clientDisconnect = data.data.client;
             let clientObject = scene.getObjectByName(clientDisconnect.id);
-            console.log(clientObject);
             clientObject.removeFromParent();
             break;
 
