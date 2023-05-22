@@ -32,7 +32,7 @@ export class immovableCube{
             this.cube.rotation.x = this.rotation.x;
             this.cube.rotation.y = this.rotation.y;
             this.cube.rotation.z = this.rotation.z;
-            this.groupObject = cube;
+            this.groupObject = this.cube;
             this.cube.name = this.name;
             this.group.add(this.groupObject);
             document.dispatchEvent(cubeEvent);
