@@ -160,9 +160,9 @@ wsc.onmessage = (message) => {
                                 y:1,
                                 cell
                             },
-                            THREE.BoxGeometry(),
+                            THREE.BoxGeometry,
                             THREE.MeshStandardMaterial,
-                            THREE.Mesh(),
+                            THREE.Mesh,
                             {
                                 color:0x00ff00,
                                 wireframe:false
