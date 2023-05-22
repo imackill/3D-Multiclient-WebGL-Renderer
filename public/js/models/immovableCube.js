@@ -6,12 +6,13 @@ export class immovableCube{
     geometry,
     material,
     meshType,
-    materialOptions={
+    materialOptions,
+    group,
+    rotation,
+    options={
         edges:false,
         edgesColor:0x000000,
-    },
-    group,
-    rotation
+    }
     ){
         this.lifespan = 0;
         this.name = objName;
@@ -38,9 +39,9 @@ export class immovableCube{
             this.groupObject = this.cube;
             this.cube.name = this.name;
             this.group.add(this.groupObject);
-            if(this.materialOptions.edges == true){
+            if(this.options.edges == true){
                 this.edgesgeo = new THREE.EdgesGeometry(this.cube);
-                this.edgesmat = new THREE.LineBasicMaterial({color:this.materialOptions.edgesColor, linewidth:2});
+                this.edgesmat = new THREE.LineBasicMaterial({color:this.options.edgesColor, linewidth:2});
                 this.edgesObj = new THREE.LineSegments(this.edgesgeo, this.edgesmat);
                 this.group.add(this.edgeObj);
             }

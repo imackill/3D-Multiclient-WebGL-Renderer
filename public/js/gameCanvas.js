@@ -167,11 +167,13 @@ wsc.onmessage = (message) => {
                             {
                                 color:0x00ff00,
                                 wireframe:false,
-                                edges:true,
-                                edgesColor:0x000000,
                             },
                             PBitTerrainGroup,
-                            new THREE.Quaternion(0,0,0,'_XYZ')
+                            new THREE.Quaternion(0,0,0,'_XYZ'),
+                            {
+                                edges:true,
+                                edgesColor:0x000000,
+                            }
 
                         );
                         cellBox.initElement();
