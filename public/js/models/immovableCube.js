@@ -25,16 +25,16 @@ export class immovableCube{
         this.initElement = () => {
             let geo = new this.geometry(this.size.x,this.size.y,this.size.z);
             let mat = new this.material(this.materialOptions);
-            let cube =  new this.meshType(geo, mat);
-            cube.position.x=this.pos.x
-            cube.position.y=this.pos.y
-            cube.position.z=this.pos.z
-            cube.rotation.x = this.rotation.x;
-            cube.rotation.y = this.rotation.y;
-            cube.rotation.z = this.rotation.z;
+            this.cube =  new this.meshType(geo, mat);
+            this.cube.position.x=this.pos.x
+            this.cube.position.y=this.pos.y
+            this.cube.position.z=this.pos.z
+            this.cube.rotation.x = this.rotation.x;
+            this.cube.rotation.y = this.rotation.y;
+            this.cube.rotation.z = this.rotation.z;
             this.groupObject = cube;
             this.cube.name = this.name;
-            this.group.add(cube);
+            this.group.add(this.groupObject);
             document.dispatchEvent(cubeEvent);
             setInterval(()=>this.lifespan+=1,1000);
         };
