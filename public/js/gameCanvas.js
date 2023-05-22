@@ -166,7 +166,9 @@ wsc.onmessage = (message) => {
                             THREE.Mesh,
                             {
                                 color:0x00ff00,
-                                wireframe:false
+                                wireframe:false,
+                                edges:true,
+                                edgesColor:0x000000,
                             },
                             PBitTerrainGroup,
                             new THREE.Quaternion(0,0,0,'_XYZ')
