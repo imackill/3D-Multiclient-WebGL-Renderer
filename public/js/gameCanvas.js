@@ -177,7 +177,9 @@ wsc.onmessage = (message) => {
 
         case "DisconnectBroadcast":
             let clientDisconnect = data.data.client;
-            scene.getObjectByName(clientDisconnect.id).remove();
+            let clientObject = scene.getObjectByName(clientDisconnect.id);
+            console.log(clientObject);
+            clientObject.remove();
             break;
 
         default:
