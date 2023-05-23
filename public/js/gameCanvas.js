@@ -41,7 +41,7 @@ let update = () => {
     position.z += velocity.z * Math.cos(threeCamera.rotation.x);
     position.x += velocity.z * Math.sin(threeCamera.rotation.y);
     position.z -= velocity.x * Math.sin(threeCamera.rotation.y);
-    position.x += velocity.x * Math.cos(threeCamera.rotation.x);
+    position.x -= velocity.x * Math.cos(threeCamera.rotation.x);
     position.y += velocity.y;
 };
 
