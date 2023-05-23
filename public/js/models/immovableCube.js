@@ -31,9 +31,9 @@ export class immovableCube{
             let geo = new this.geometry(this.size.x,this.size.y,this.size.z);
             let mat = new this.material(this.materialOptions);
             this.cube =  new this.meshType(geo, mat);
-            this.cube.position.x=this.pos.x
-            this.cube.position.y=this.pos.y
-            this.cube.position.z=this.pos.z
+            this.cube.position.x=this.pos.x;
+            this.cube.position.y=this.pos.y;
+            this.cube.position.z=this.pos.z;
             this.cube.rotation.x = this.rotation.x;
             this.cube.rotation.y = this.rotation.y;
             this.cube.rotation.z = this.rotation.z;
@@ -43,6 +43,7 @@ export class immovableCube{
             if(this.options.edges == true){
                 let edges = new THREE.EdgesGeometry( geo );
                 this.edgeObj = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: this.options.edgesColor } ) );
+                this.edgeObj.material.linewidth = 2;
                 this.edgeObj.position.set(
                     this.cube.position.x,
                     this.cube.position.y,
