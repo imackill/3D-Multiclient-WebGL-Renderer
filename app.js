@@ -37,8 +37,8 @@ app.get("/", (req,res) =>{
 //generate world info (happens on every restart)
 let maxHeight = 5;
 let minHeight = 1;
-let xSize = 30;
-let ySize = 30;
+let xSize = 50;
+let ySize = 50;
 let worldJSON = JSON.parse(fs.readFileSync(`data/world.json`));
 let pWorldGenerator = new pnoiseGenerator(
     xSize,
