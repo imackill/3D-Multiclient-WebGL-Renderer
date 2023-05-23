@@ -10,9 +10,6 @@ let wsc_data = undefined;
 const scene = new THREE.Scene();
 
 let threeCamera = new THREE.PerspectiveCamera(83, window.innerWidth/window.innerHeight, 0.1, 1000);
-threeCamera.position.x = 50;
-threeCamera.position.y = 50;
-threeCamera.position.z = 50;
 
 const renderer = new THREE.WebGLRenderer({alpha: true});
 renderer.setClearColor( 0xADD8E6, 1);
@@ -26,8 +23,8 @@ renderer.domElement.addEventListener("click", () => {
 
 $("body").append(renderer.domElement);
 
-let speed = 0.2, maxSpeed = speed, friction = 0.91,
-    position = { x: 0, y: 0, z: 0 },
+let speed = 0.5, maxSpeed = speed, friction = 0.91,
+    position = { x: 50, y: 50, z: 50 },
     velocity = { x: 0, y: 0, z: 0 },
     keyPressed = {};
 
