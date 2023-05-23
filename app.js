@@ -113,7 +113,7 @@ wss.on('connection', (ws,req) => {
             data:{
                 global_arr:currentObjectArray,
                 world: worldData,
-                BLOCKSIZE:4,
+                BLOCKSIZE:10,
                 client:wsc_req.data.client
             }
         }
