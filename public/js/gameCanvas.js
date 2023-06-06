@@ -23,26 +23,11 @@ renderer.domElement.addEventListener("click", () => {
 
 $("body").append(renderer.domElement);
 
-let speed = 0.5, maxSpeed = speed, friction = 0.91,
-    position = { x: 50, y: 50, z: 50 },
-    velocity = { x: 0, y: 0, z: 0 },
-    keyPressed = {};
-
+let speed = 1.0,
+keyPressed = {};
+let direction = new THREE.Vector3;
 let update = () => {
-    if (keyPressed["w"] && velocity.z > -maxSpeed) velocity.z -= speed;
-    if (keyPressed["s"] && velocity.z < maxSpeed) velocity.z += speed;
-    if (keyPressed["a"] && velocity.x > -maxSpeed) velocity.x -= speed;
-    if (keyPressed["d"] && velocity.x < maxSpeed) velocity.x += speed;
-    if (keyPressed["Shift"] && velocity.y > -maxSpeed) velocity.y -= speed;
-    if (keyPressed[" "] && velocity.y < maxSpeed) velocity.y += speed;
-    velocity.z *= friction;
-    velocity.x *= friction;
-    velocity.y *= friction;
-    position.z += velocity.z * Math.cos(threeCamera.rotation.x);
-    position.x += velocity.z * Math.sin(threeCamera.rotation.y);
-    position.z -= velocity.x * Math.sin(threeCamera.rotation.y);
-    position.x -= velocity.x;
-    position.y += velocity.y;
+    if (keyPressed["w"]) threeCamera.position.addScaledVector(threeCamera.getWorldDirection(direction), speed);
 };
 
 setInterval(update, 10);
@@ -91,9 +76,6 @@ let light_01 = new models.immovableLight(
 RenderJobs.camera =
     {
         update: () => {
-        threeCamera.position.x = position.x;
-        threeCamera.position.y = position.y;
-        threeCamera.position.z = position.z;
         let cameraData = {
             position: new THREE.Vector3(threeCamera.position.x,threeCamera.position.y,threeCamera.position.z),
             rotation: new THREE.Quaternion(threeCamera.rotation._x,threeCamera.rotation._y,threeCamera.rotation._z,threeCamera.rotation._w)
