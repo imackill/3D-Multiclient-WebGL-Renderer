@@ -3,4 +3,4 @@
 <br>
 <a>Check it out <a href="https://erasmusss-multiclient-webgl-renderer.onrender.com">here.</a>
 <br>
-<small>Just a note: Render requires a GIT commit to run the release.</small>
+<sup>Just a note: The experimental branch only works locally because it uses ws, not wss and doesn't have a SSL certificate like the master branch does with Render's built-in certificate.</sup>
