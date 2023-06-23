@@ -28,22 +28,22 @@ keyPressed = {};
 let direction = new THREE.Vector3;
 let update = () => {
     if (keyPressed["w"]){
-        let worldDirection = threeCamera.position.getWorldDirection(direction);
+        let worldDirection = threeCamera.getWorldDirection(direction);
         worldDirection.y = 0;
         threeCamera.position.addScaledVector(worldDirection, speed);
     }
     if (keyPressed["a"]){
-        let worldDirection = threeCamera.position.getWorldDirection(direction);
+        let worldDirection = threeCamera.getWorldDirection(direction);
         worldDirection.y = 0;
         threeCamera.position.addScaledVector(worldDirection.cross(new THREE.Vector3(0, 1, 0)).normalize(), -speed);
     }
     if (keyPressed["s"]){
-        let worldDirection = threeCamera.position.getWorldDirection(direction);
+        let worldDirection = threeCamera.getWorldDirection(direction);
         worldDirection.y = 0;
         threeCamera.position.addScaledVector(worldDirection, -speed);
     }
     if (keyPressed["d"]){
-        let worldDirection = threeCamera.position.getWorldDirection(direction);
+        let worldDirection = threeCamera.getWorldDirection(direction);
         worldDirection.y = 0;
         threeCamera.position.addScaledVector(worldDirection.cross(new THREE.Vector3(0, 1, 0)).normalize(), speed);
     }
