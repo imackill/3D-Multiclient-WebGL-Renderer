@@ -28,6 +28,9 @@ keyPressed = {};
 let direction = new THREE.Vector3;
 let update = () => {
     if (keyPressed["w"]) threeCamera.position.addScaledVector(threeCamera.getWorldDirection(direction), speed);
+    if (keyPressed["a"]) threeCamera.position.addScaledVector(threeCamera.getWorldDirection(direction).cross(new THREE.Vector3(0, 1, 0)).normalize(), -speed);
+    if (keyPressed["s"]) threeCamera.position.addScaledVector(threeCamera.getWorldDirection(direction), -speed);
+    if (keyPressed["d"]) threeCamera.position.addScaledVector(threeCamera.getWorldDirection(direction).cross(new THREE.Vector3(0, 1, 0)).normalize(), speed);
 };
 
 setInterval(update, 10);
@@ -202,6 +205,13 @@ function animate() {
     requestAnimationFrame(animate);
     RenderJobs.camera.update();
     renderer.render(scene, threeCamera);
+    RenderJobs.players.forEach(player =>{
+        player.boundingbox.copy(player.mesh.geometry.boundingBox).applyMatrix4(player.mesh.matrixWorld);
+        let intersects = player.checkforIntersection();
+    });
+    RenderJobs.arr.forEach(terrain =>{
+        terrain.boundingbox.copy(terrain.mesh.geometry.boundingBox).applyMatrix4(terrain.mesh.matrixWorld);
+    });
 }
 
 animate();

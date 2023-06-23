@@ -37,6 +37,7 @@ export class playerPreset{
         this.mesh = new THREE.Mesh(new this.geometry(this.size.box, this.size.box, this.size.box),this.material);
         this.initElement = () => {
             this.mesh.name = this.name;
+            this.mesh.geometry.computeBoundingBox();
             this.mesh.position.set(position.x,position.y,position.z);
             this.mesh.rotation.set(rotation.x,rotation.y,rotation.z);
             this.scene.add(this.mesh);
@@ -53,6 +54,27 @@ export class playerPreset{
                 rotation:this.rotation,
             };
             return JSON.stringify(userData);
+        }
+        this.checkforIntersection = () => {
+            let objList = this.scene.children;
+            let objArr = [];
+            objList.forEach(child => {
+                if(child.name == this.name || child.type == "AmbientLight"){
+                    //pass
+                }else{
+                    let childBox = new THREE.Box3().setFromObject(child);
+                    let res = this.boundingbox.intersectsBox(childBox);
+                    if(res == true){
+                        let res = {
+                            name: child.name,
+                            type:child.type,
+                            obj: child
+                        };
+                        objArr.push(res);
+                    }
+                }
+            });
+            return objArr;
         }
     }
 }
