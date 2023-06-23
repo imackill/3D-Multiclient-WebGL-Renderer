@@ -225,9 +225,9 @@ function animate() {
         player.boundingbox.copy(player.mesh.geometry.boundingBox).applyMatrix4(player.mesh.matrixWorld);
         let intersects = player.checkforIntersection();
     });
-    RenderJobs.arr.forEach(terrain =>{
+    /*RenderJobs.arr.forEach(terrain =>{
         terrain.boundingbox.copy(terrain.mesh.geometry.boundingBox).applyMatrix4(terrain.mesh.matrixWorld);
-    });
+    });*/
 }
 
 animate();
