@@ -11,10 +11,6 @@ let wsc_data = undefined;
 Ammo().then( function( AmmoLib ) {
 
 	AMMO = AmmoLib;
-
-	init();
-	animate();
-
 } );
 
 
