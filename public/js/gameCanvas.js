@@ -2,7 +2,7 @@ import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
 import * as AMMO from "ammo";
-import RigidBody from "./models/bodies/bodyRigid.js";
+import { RigidBody } from "./models/bodies/bodyRigid.js";
 
 const wsc = new WebSocket(`wss://${window.location.hostname}:${window.location.port}`); //main page is wss
 
