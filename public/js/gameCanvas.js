@@ -9,7 +9,7 @@ const wsc = new WebSocket(`wss://${window.location.hostname}:${window.location.p
 let wsc_data = undefined;
 
 //instantiate Ammo.js
-let collisionConfig = new AMMO.btDefaultCollisionConfiguration();
+let collisionConfig = AMMO.btDefaultCollisionConfiguration;
 let ammoDispatcher = new AMMO.btCollisionDispatcher(collisionConfig);
 let ammoBroadphase = new AMMO.btDbvtBroadphase();
 let ammoSolver = new AMMO.btSequentalImpulseConstraintSolver();
