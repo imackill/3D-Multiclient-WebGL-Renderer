@@ -1,12 +1,22 @@
 import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
-import * as AMMO from "ammo";
+import * as Ammo from "ammo";
 import { RigidBody } from "./models/bodies/bodyRigid.js";
 
 const wsc = new WebSocket(`wss://${window.location.hostname}:${window.location.port}`); //main page is wss
 
 let wsc_data = undefined;
+
+Ammo().then( function( AmmoLib ) {
+
+	AMMO = AmmoLib;
+
+	init();
+	animate();
+
+} );
+
 
 //instantiate Ammo.js
 let collisionConfig = new AMMO.btDefaultCollisionConfiguration();
