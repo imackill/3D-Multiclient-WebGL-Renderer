@@ -48,15 +48,11 @@ let update = () => {
         threeCamera.position.addScaledVector(worldDirection.cross(new THREE.Vector3(0, 1, 0)).normalize(), speed);
     }
     if (keyPressed[" "]){
-        let worldDirection = threeCamera.getWorldDirection(direction);
-        worldDirection.x = 0;
-        worldDirection.z = 0;
+        let worldDirection = new Vector3(0,1,0)
         threeCamera.position.addScaledVector(worldDirection, speed);
     }
     if (keyPressed["Shift"]){
-        let worldDirection = threeCamera.getWorldDirection(direction);
-        worldDirection.x = 0;
-        worldDirection.z = 0;
+        let worldDirection = new Vector3(0,-1,0);
         threeCamera.position.addScaledVector(worldDirection, -speed);
     }
 };
