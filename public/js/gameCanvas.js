@@ -52,7 +52,7 @@ let update = () => {
         threeCamera.position.addScaledVector(worldDirection, speed);
     }
     if (keyPressed["Shift"]){
-        let worldDirection = new THREE.Vector3(0,-1,0);
+        let worldDirection = new THREE.Vector3(0,1,0);
         threeCamera.position.addScaledVector(worldDirection, -speed);
     }
 };
