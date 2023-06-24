@@ -4,12 +4,14 @@ import { PointerLockControls } from 'PointerLockControls';
 import * as AMMO from "ammo";
 import { RigidBody } from "./models/bodies/bodyRigid.js";
 
+console.log(AMMO);
+
 const wsc = new WebSocket(`wss://${window.location.hostname}:${window.location.port}`); //main page is wss
 
 let wsc_data = undefined;
 
 //instantiate Ammo.js
-let collisionConfig = AMMO.btDefaultCollisionConfiguration;
+let collisionConfig = new AMMO.btDefaultCollisionConfiguration();
 let ammoDispatcher = new AMMO.btCollisionDispatcher(collisionConfig);
 let ammoBroadphase = new AMMO.btDbvtBroadphase();
 let ammoSolver = new AMMO.btSequentalImpulseConstraintSolver();
