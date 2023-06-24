@@ -4,8 +4,6 @@ import { PointerLockControls } from 'PointerLockControls';
 import * as AMMO from "ammo";
 import { RigidBody } from "./models/bodies/bodyRigid.js";
 
-console.log(AMMO);
-
 const wsc = new WebSocket(`wss://${window.location.hostname}:${window.location.port}`); //main page is wss
 
 let wsc_data = undefined;
