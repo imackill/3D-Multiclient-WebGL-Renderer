@@ -1,10 +1,22 @@
 import * as THREE from "three";
 import * as models from './models/manifest.js';
 import { PointerLockControls } from 'PointerLockControls';
+import * as AMMO from "ammo";
+import RigidBody from "./models/bodies/bodyRigid.js";
 
 const wsc = new WebSocket(`wss://${window.location.hostname}:${window.location.port}`); //main page is wss
 
 let wsc_data = undefined;
+
+//instantiate Ammo.js
+let collisionConfig = new AMMO.btDefaultCollisionCOnfiguration();
+let ammoDispatcher = new AMMO.btCollisionDispatcher(collisionConfig);
+let ammoBroadphase = new AMMO.btDbvtBroadphase();
+let ammoSolver = new AMMO.btSequentalImpulseConstraintSolver();
+let physicsWorld = new AMMO.btDiscreteDynamicsWorld(
+    ammoDispatcher, ammoBroadphase, ammoSolver, collisionConfig
+);
+physicsWorld.setGravity(new AMMO.btVector3(0,-10,0));
 
 //Create scene
 const scene = new THREE.Scene();
@@ -63,7 +75,7 @@ document.addEventListener('keydown', e => keyPressed[e.key] = true);
 document.addEventListener('keyup', e => keyPressed[e.key] = false);
 document.addEventListener('resize', () => renderer.setSize(innerWidth, innerHeight));
 
-const RenderJobs = {groups:[], players:[],arr:[]};
+const RenderJobs = {groups:[], players:[],arr:[], rigidbodies:[]};
 
 const immovable_objectGroup = new THREE.Group();
 immovable_objectGroup.name = "landscapegroup";
@@ -206,6 +218,9 @@ wsc.onmessage = (message) => {
                         preset
                     );
                     playerObject.initElement();
+                    let playerBody = new RigidBody(player.id);
+                    playerBody.createBox(0,pos,rot,playerObject.size);
+                    RenderJobs.rigidbodies.push({mesh:playerObject.mesh,rigidBody: playerBody});
                     RenderJobs.players.push(playerObject);
                 }
             });
@@ -223,19 +238,30 @@ wsc.onmessage = (message) => {
     }
 
 }
-
+let previousRAF = null;
+let tmpTransform_ = new AMMO.btTransform();
+function step(timeElapsed){
+    const timeElapsedS = timeElapsed * 0.001;
+    physicsWorld.stepSimulation(timeElapsedS, 10);
+    for (let i = 0; i < RenderJobs.rigidbodies.length; ++i) {
+        RenderJobs.rigidbodies[i].rigidBody.motionState_.getWorldTransform(tmpTransform_);
+        let pos = tmpTransform_.getOrigin();
+        let quat = tmpTransform_.getRotation();
+        let pos3 = new THREE.Vector3(pos.x(),pos.y(),pos.z());
+        let quat3 = new THREE.Vector3(quat.x(),quat.y(),quat.z());
+        RenderJobs.rigidbodies[i].mesh.position.copy(pos3);
+        RenderJobs.rigidbodies[i].mesh.rotation.copy(quat3);
+    }
+}
 //final animation and rendering
-function animate() {
+function animate(t) {
+    if(previousRAF == null){
+        previousRAF = t;
+    }
+    step(t-previousRAF);
     requestAnimationFrame(animate);
     RenderJobs.camera.update();
     renderer.render(scene, threeCamera);
-    RenderJobs.players.forEach(player =>{
-        player.boundingbox.copy(player.mesh.geometry.boundingBox).applyMatrix4(player.mesh.matrixWorld);
-        let intersects = player.checkforIntersection();
-    });
-    /*RenderJobs.arr.forEach(terrain =>{
-        terrain.boundingbox.copy(terrain.mesh.geometry.boundingBox).applyMatrix4(terrain.mesh.matrixWorld);
-    });*/
 }
 
 animate();
